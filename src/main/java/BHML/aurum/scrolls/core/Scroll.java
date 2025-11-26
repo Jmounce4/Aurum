@@ -7,5 +7,7 @@ public interface Scroll {
     Element getElement();
     String getId();
     int getMaxUses();
+    String getDescription();
     void cast(Player caster);
+
 }

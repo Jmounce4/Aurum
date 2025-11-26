@@ -3,8 +3,10 @@ import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.core.Scroll;
 import BHML.aurum.utils.Keys;
 
+import BHML.aurum.utils.TextUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
 import org.bukkit.FluidCollisionMode;
@@ -45,14 +47,16 @@ public class ScrollUtils {
 
         );
 
-        meta.displayName(Component.text(scroll.getId().substring(0,1).toUpperCase()
-                + scroll.getId().substring(1)).decoration(TextDecoration.ITALIC, false));
-
         Element element = scroll.getElement();
+        TextColor elementColor = element.getColor();
+
+        meta.displayName(Component.text(scroll.getId().substring(0,1).toUpperCase()
+                + scroll.getId().substring(1), elementColor).decoration(TextDecoration.ITALIC, false).decoration(TextDecoration.BOLD, true));
 
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(element.name()).color(element.getColor()).decoration((TextDecoration.ITALIC), false));
-        lore.add(Component.text(scroll.getMaxUses() + "/" + scroll.getMaxUses() + " Uses").decoration((TextDecoration.ITALIC), false));
+        lore.addAll(TextUtils.wrapLore(scroll.getDescription(), 50, NamedTextColor.WHITE));
+        //lore.add(Component.empty());
+        lore.add(Component.text(  scroll.getMaxUses() + "/" + scroll.getMaxUses() + " Uses", NamedTextColor.GOLD).decoration((TextDecoration.ITALIC), false));
 
         meta.lore(lore);
 
@@ -74,17 +78,30 @@ public class ScrollUtils {
     // ----- SET USES -----
     public static void setUses(ItemStack item, int amount) {
         ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
         int max = meta.getPersistentDataContainer().get(Keys.SCROLL_MAX_USES, PersistentDataType.INTEGER);
-        if (amount < 0) amount = 0;
-        if (amount > max) amount = max;
+        amount = Math.max(0, Math.min(amount, max));
 
         meta.getPersistentDataContainer().set(Keys.SCROLL_USES, PersistentDataType.INTEGER, amount);
 
-        // update the lore
-        List<Component> lore = meta.lore();
-        lore.set(1, Component.text(amount + "/" + max + " Uses"));
-        meta.lore(lore);
+        // get existing lore safely
+        List<Component> lore = meta.hasLore() ? meta.lore() : new ArrayList<>();
+        if (lore.isEmpty()) {
+            // if lore somehow vanished, rebuild it so we don't index crash
+            lore.add(Component.text(""));
+            lore.add(Component.text(""));
+        }
 
+        // ALWAYS update the LAST line
+        int index = lore.size() - 1;
+
+        lore.set(index,
+                Component.text(amount + "/" + max + " Uses", NamedTextColor.GOLD)
+                        .decoration(TextDecoration.ITALIC, false)
+        );
+
+        meta.lore(lore);
         item.setItemMeta(meta);
     }
 
@@ -94,6 +111,10 @@ public class ScrollUtils {
         return meta.getPersistentDataContainer().get(Keys.SCROLL_ID, PersistentDataType.STRING);
     }
 
+    public static Scroll getScrollForItem(ItemStack item) {
+        String id = getScrollId(item);
+        return id == null ? null : ScrollRegistry.get(id);
+    }
 
 
 
@@ -103,6 +124,14 @@ public class ScrollUtils {
 
     // OLD MAGIC HIT DETECTION STUFF
 
+
+    public static void applySpellDamage(Player caster, LivingEntity target, double damage) {
+
+
+        target.setNoDamageTicks(0);  // ensures spell hits reliably
+        target.damage(damage);
+
+    }
 
     public static boolean hasClearShot(Player player, LivingEntity target) {
         World world = player.getWorld();
