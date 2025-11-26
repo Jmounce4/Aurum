@@ -2,3 +2,7 @@ name: Aurum
 version: '1.0-SNAPSHOT'
 main: BHML.aurum.Aurum
 api-version: '1.21'
+commands:
+  givescroll:
+    description: Gives a scroll by ID.
+    usage: /givescroll <id>
