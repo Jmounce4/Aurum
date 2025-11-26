@@ -1,0 +1,4 @@
+name: Aurum
+version: '1.0-SNAPSHOT'
+main: BHML.aurum.Aurum
+api-version: '1.21'
