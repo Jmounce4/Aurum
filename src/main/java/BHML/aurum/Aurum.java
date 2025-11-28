@@ -2,6 +2,8 @@ package BHML.aurum;
 
 import BHML.aurum.commands.GiveScrollCommand;
 import BHML.aurum.listeners.ScrollListener;
+import BHML.aurum.scrolls.Lectern.LecternListener;
+import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
 import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.fire.Fireball;
@@ -23,16 +25,23 @@ public final class Aurum extends JavaPlugin {
 
 
 
-
+        //Use Scrolls
         getServer().getPluginManager().registerEvents(new ScrollListener(this), this);
+        //Commands
         registerCommands();
 
 
         //Register Scrolls
-        ScrollRegistry.register(new Fireball());
+        ScrollRegistry.registerDefaults();
 
         //Register passive particle effects
         new ScrollParticleTask(this).runTaskTimer(this, 0L, 5L);
+
+        //Right Clicking Lecterns
+        getServer().getPluginManager().registerEvents(new LecternListener(this), this);
+
+        //Scroll Refills GUI
+        getServer().getPluginManager().registerEvents(new RefillGUIListener(), this);
 
 
         getLogger().info("***Aurum loaded***");

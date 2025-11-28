@@ -107,7 +107,15 @@ public class ScrollUtils {
 
     // ----- GET SCROLL ID -----
     public static String getScrollId(ItemStack item) {
+        if (item == null) return null;
+        if (!item.hasItemMeta()) return null;
+
         ItemMeta meta = item.getItemMeta();
+        if (meta == null) return null;
+
+        if (!meta.getPersistentDataContainer().has(Keys.SCROLL_ID, PersistentDataType.STRING))
+            return null;
+
         return meta.getPersistentDataContainer().get(Keys.SCROLL_ID, PersistentDataType.STRING);
     }
 
