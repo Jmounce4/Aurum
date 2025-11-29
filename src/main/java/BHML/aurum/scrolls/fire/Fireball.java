@@ -30,21 +30,26 @@ public class Fireball implements Scroll {
     }
 
     @Override
+    public String getName() {
+        return "Fireball";
+    }
+
+    @Override
     public int getMaxUses() {
-        return 20;
+        return 40;
     }
 
     @Override
     public String getDescription(){
-        return "Shoots a fireball that explodes on impact, " +
-                "dealing damage and igniting targets";
+        return "Shoots a fireball that explodes on impact, dealing damage and igniting targets";
     }
 
 
     @Override
     public int getGoldCost() { return 1; }
     @Override
-    public int getRestoreAmount() { return 2; }
+    public int getRestoreAmount() { return 10; }
+    public int getCooldown() { return 500; }
 
 
     @Override
@@ -53,9 +58,9 @@ public class Fireball implements Scroll {
         Vector direction = origin.getDirection().normalize().multiply(1.0); // Launch velocity
         World world = player.getWorld();
 
-        int maxTicks = 2000; // How long until it disappears
-        double damage = 10.0;
-        double hitRadius = 1.8;
+        int maxTicks = 2500; // How long until it disappears
+        double damage = 18.0;
+        double hitRadius = 1.5;
         double gravity = -0.015;
 
         Vector currentVelocity = direction.clone();

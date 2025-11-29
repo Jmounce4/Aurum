@@ -62,7 +62,7 @@ public class ScrollListener implements Listener{
                 .getOrDefault(Keys.SCROLL_COOLDOWN, PersistentDataType.LONG, 0L);
 
         if (now < cd) {
-            long left = (cd - now) / 1000;
+            long left = (cd - now) / scroll.getCooldown();
             p.sendMessage("Scroll cooling down (" + left + "s)");
             return;
         }
@@ -82,7 +82,7 @@ public class ScrollListener implements Listener{
         // apply cooldown
         meta = item.getItemMeta();
         meta.getPersistentDataContainer().set(Keys.SCROLL_COOLDOWN,
-                PersistentDataType.LONG, now + 1000);
+                PersistentDataType.LONG, now + scroll.getCooldown());
         item.setItemMeta(meta);
     }
 

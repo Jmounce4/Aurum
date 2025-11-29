@@ -10,9 +10,9 @@ public enum Element {
     AIR(TextColor.color(0, 255, 185)),        // cyan-ish
     FIRE(TextColor.color(255, 0, 0)),         // red
     LIGHTNING(TextColor.color(255, 255, 0)),  // yellow
-    WATER(TextColor.color(0, 0, 255)),        // blue
-    EARTH(TextColor.color(0, 128, 0)),        // green
-    NORMAL(TextColor.color(255, 255, 255)),   // white
+    WATER(TextColor.color(0, 100, 255)),        // blue
+    EARTH(TextColor.color(0, 118, 0)),        // green
+    NORMAL(TextColor.color(205, 205, 205)),   // white
     ENDER(TextColor.color(128, 0, 128));      // purple
 
     private final TextColor color;

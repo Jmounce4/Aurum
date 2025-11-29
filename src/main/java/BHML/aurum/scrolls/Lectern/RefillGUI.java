@@ -17,7 +17,7 @@ public class RefillGUI {
 
         // Decorative filler
         ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemStack filler2 = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        ItemStack filler2 = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
         ItemMeta meta = filler.getItemMeta();
         meta.displayName(Component.text(" "));
         filler.setItemMeta(meta);

@@ -4,6 +4,7 @@ import BHML.aurum.scrolls.core.Scroll;
 import BHML.aurum.scrolls.core.ScrollUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -215,8 +216,8 @@ public class RefillGUIListener implements Listener {
         if (rm != null) {
             List<Component> lore = rm.hasLore() ? new ArrayList<>(rm.lore()) : new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(Component.text("Preview: +" + totalRestore + " uses", NamedTextColor.GREEN));
-            lore.add(Component.text("Will cost: " + (refills * cost) + " gold", NamedTextColor.YELLOW));
+            lore.add(Component.text("+" +totalRestore + " uses", NamedTextColor.GREEN).decoration(TextDecoration.ITALIC, false));
+            lore.add(Component.text("Cost: " + (refills * cost) + " gold", NamedTextColor.GOLD).decoration(TextDecoration.ITALIC, false));
             rm.lore(lore);
             result.setItemMeta(rm);
         }

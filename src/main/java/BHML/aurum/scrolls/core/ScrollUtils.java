@@ -50,8 +50,8 @@ public class ScrollUtils {
         Element element = scroll.getElement();
         TextColor elementColor = element.getColor();
 
-        meta.displayName(Component.text(scroll.getId().substring(0,1).toUpperCase()
-                + scroll.getId().substring(1), elementColor).decoration(TextDecoration.ITALIC, false).decoration(TextDecoration.BOLD, true));
+        meta.displayName(Component.text(scroll.getName()
+                , elementColor).decoration(TextDecoration.ITALIC, false).decoration(TextDecoration.BOLD, true));
 
         List<Component> lore = new ArrayList<>();
         lore.addAll(TextUtils.wrapLore(scroll.getDescription(), 50, NamedTextColor.WHITE));
@@ -137,7 +137,7 @@ public class ScrollUtils {
 
 
         target.setNoDamageTicks(0);  // ensures spell hits reliably
-        target.damage(damage);
+        target.damage(damage, caster);
 
     }
 

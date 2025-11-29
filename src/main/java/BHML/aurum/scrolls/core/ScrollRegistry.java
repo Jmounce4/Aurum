@@ -1,6 +1,7 @@
 package BHML.aurum.scrolls.core;
 
 import BHML.aurum.scrolls.fire.Fireball;
+import BHML.aurum.scrolls.water.LiquidLance;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class ScrollRegistry {
     // Call this at startup
     public static void registerDefaults() {
         register(new Fireball());
-        // register(new ZapScroll()); etc.
+        register(new LiquidLance());
     }
 
 

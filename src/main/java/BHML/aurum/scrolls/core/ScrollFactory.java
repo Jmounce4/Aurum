@@ -1,6 +1,7 @@
 package BHML.aurum.scrolls.core;
 
 import BHML.aurum.scrolls.fire.Fireball;
+import BHML.aurum.scrolls.water.LiquidLance;
 import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ public class ScrollFactory {
     static {
         // Register all scrolls HERE
         register(new Fireball());
+        register(new LiquidLance());
         // register(new ZapScroll());
         // register(new EarthSpikeScroll());
     }
