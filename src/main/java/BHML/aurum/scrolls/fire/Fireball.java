@@ -41,7 +41,7 @@ public class Fireball implements Scroll {
 
     @Override
     public String getDescription(){
-        return "Shoots a fireball that explodes on impact, dealing damage and igniting targets";
+        return "Shoot a fireball that explodes on impact, dealing AoE damage and igniting targets";
     }
 
 
@@ -49,6 +49,7 @@ public class Fireball implements Scroll {
     public int getGoldCost() { return 1; }
     @Override
     public int getRestoreAmount() { return 10; }
+    @Override
     public int getCooldown() { return 500; }
 
 

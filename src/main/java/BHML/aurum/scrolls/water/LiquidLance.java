@@ -40,7 +40,7 @@ public class LiquidLance implements Scroll {
 
     @Override
     public String getDescription() {
-        return "Project a lance of water, piercing and slowing all enemies";
+        return "Emit a lance of water, piercing and slowing all enemies";
     }
 
 
@@ -54,6 +54,7 @@ public class LiquidLance implements Scroll {
         return 20;
     }
 
+    @Override
     public int getCooldown() { return 100; } // 0.1 seconds?
 
 
