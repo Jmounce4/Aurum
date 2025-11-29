@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="aurum:jar">
+    <output-path>D:/Julian/Documents/MCserver_Papermc/1.21.10/plugins</output-path>
+    <root id="archive" name="aurum.jar">
+      <element id="module-output" name="aurum" />
+    </root>
+  </artifact>
+</component>

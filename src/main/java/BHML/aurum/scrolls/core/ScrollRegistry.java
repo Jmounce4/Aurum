@@ -1,0 +1,31 @@
+package BHML.aurum.scrolls.core;
+
+import BHML.aurum.scrolls.fire.Fireball;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ScrollRegistry {
+
+    private static final Map<String, Scroll> REGISTRY = new HashMap<>();
+
+    public static void register(Scroll scroll) {
+        REGISTRY.put(scroll.getId().toLowerCase(), scroll);
+    }
+
+    public static Scroll get(String id) {
+        return REGISTRY.get(id.toLowerCase());
+    }
+
+    public static Map<String, Scroll> all() { return Collections.unmodifiableMap(REGISTRY); }
+
+    // Call this at startup
+    public static void registerDefaults() {
+        register(new Fireball());
+        // register(new ZapScroll()); etc.
+    }
+
+
+
+}
