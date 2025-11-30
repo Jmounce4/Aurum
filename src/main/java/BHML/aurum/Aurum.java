@@ -3,6 +3,7 @@ package BHML.aurum;
 import BHML.aurum.commands.GiveScrollCommand;
 import BHML.aurum.listeners.BowListener;
 import BHML.aurum.listeners.ScrollListener;
+import BHML.aurum.listeners.WorldGenListener;
 import BHML.aurum.scrolls.Lectern.LecternListener;
 import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
@@ -43,6 +44,9 @@ public final class Aurum extends JavaPlugin {
 
         //Scroll Refills GUI
         getServer().getPluginManager().registerEvents(new RefillGUIListener(), this);
+
+        //
+        getServer().getPluginManager().registerEvents(new WorldGenListener(this), this);
 
         //testing bow mechanics
         getServer().getPluginManager().registerEvents(new BowListener(), this);

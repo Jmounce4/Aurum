@@ -1,6 +1,12 @@
 package BHML.aurum.scrolls.core;
 import BHML.aurum.elements.Element;
+import BHML.aurum.scrolls.air.Gust;
 import BHML.aurum.scrolls.core.Scroll;
+import BHML.aurum.scrolls.earth.Rumble;
+import BHML.aurum.scrolls.ender.EndShot;
+import BHML.aurum.scrolls.fire.Fireball;
+import BHML.aurum.scrolls.lightning.Zap;
+import BHML.aurum.scrolls.water.LiquidLance;
 import BHML.aurum.utils.Keys;
 
 import BHML.aurum.utils.TextUtils;
@@ -125,6 +131,26 @@ public class ScrollUtils {
     }
 
 
+    //For world gen/villagers
+    private static final Random random = new Random();
+
+    // List of all scrolls (replace with your actual scroll registry)
+    private static final List<Scroll> ALL_SCROLLS = List.of(
+            // example: FireScroll.INSTANCE, WaterScroll.INSTANCE, etc.
+            new Fireball(),
+            new Rumble(),
+            new Gust(),
+            new LiquidLance(),
+            new Zap(),
+            new EndShot()
+
+    );
+
+    public static ItemStack getRandomScroll() {
+        if (ALL_SCROLLS.isEmpty()) return null;
+        Scroll scroll = ALL_SCROLLS.get(random.nextInt(ALL_SCROLLS.size()));
+        return createScrollItem(scroll);
+    }
 
 
 

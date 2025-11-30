@@ -37,14 +37,14 @@ public class ScrollParticleTask extends BukkitRunnable{
             Particle particle;
             Particle.DustOptions earthColor = new Particle.DustOptions(Color.fromRGB(79, 65, 33), 1.0f);
             Particle.DustOptions airColor   = new Particle.DustOptions(Color.fromRGB(0, 255, 185), 1.0f);
-
+            Particle.DustOptions enderColor = new Particle.DustOptions(Color.fromRGB(128, 0, 128), 1.0f);
             switch (element) {
                 case FIRE      -> particle = Particle.FLAME;
                 case WATER     -> particle = Particle.SPLASH;
                 case EARTH     -> particle = Particle.DUST;
                 case AIR       -> particle = Particle.DUST;
                 case LIGHTNING -> particle = Particle.ELECTRIC_SPARK;
-                case ENDER     -> particle = Particle.DRAGON_BREATH;
+                case ENDER     -> particle = Particle.DUST;
                 default        -> particle = Particle.HAPPY_VILLAGER;
             }
 
@@ -87,7 +87,7 @@ public class ScrollParticleTask extends BukkitRunnable{
             }
             else if (element == Element.ENDER) {
 
-                player.getWorld().spawnParticle(particle, spawnLoc, 1, 0.1, 0.1, 0.1, 0.005);
+                player.getWorld().spawnParticle(particle, spawnLoc, 1, 0.1, 0.1, 0.1, enderColor);
             }
             else {
                 player.getWorld().spawnParticle(particle, spawnLoc, 1, 0.1, 0.1, 0.1, 0.0);
