@@ -3,8 +3,10 @@ import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.air.Gust;
 import BHML.aurum.scrolls.core.Scroll;
 import BHML.aurum.scrolls.earth.Rumble;
+import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
 import BHML.aurum.scrolls.fire.Fireball;
+import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.Zap;
 import BHML.aurum.scrolls.water.LiquidLance;
 import BHML.aurum.utils.Keys;
@@ -139,9 +141,11 @@ public class ScrollUtils {
             // example: FireScroll.INSTANCE, WaterScroll.INSTANCE, etc.
             new Fireball(),
             new Rumble(),
+            new TerraPath(),
             new Gust(),
             new LiquidLance(),
             new Zap(),
+            new Flash(),
             new EndShot()
 
     );
