@@ -41,7 +41,7 @@ public class Flash implements Scroll {
 
     @Override
     public String getDescription() {
-        return "Dash at the speed of lightning";
+        return "Enhance your body to dash at the speed of lightning";
     }
 
 

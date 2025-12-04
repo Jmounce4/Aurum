@@ -42,7 +42,7 @@ public class Fireball implements Scroll {
 
     @Override
     public String getDescription(){
-        return "Shoot a fireball that explodes on impact, dealing AoE damage and igniting targets";
+        return "Emit a fireball that explodes on impact, dealing AoE and igniting";
     }
 
 

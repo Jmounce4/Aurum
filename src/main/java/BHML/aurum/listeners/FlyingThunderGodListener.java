@@ -6,6 +6,8 @@ import BHML.aurum.scrolls.core.ScrollUtils;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,8 +52,11 @@ public class FlyingThunderGodListener implements Listener {
         if (clicked == null) return;
 
         Location loc = clicked.getLocation().add(0.5, 1, 0.5);
+        World world = loc.getWorld();
+        world.spawnParticle(Particle.ELECTRIC_SPARK, loc, 8, 0.1, 0.1, 0.1, 0.1);
+
 
         // Use plugin here for metadata
-        scroll.setMark(player, loc, plugin);
+        scroll.setMark(player, item, loc);
     }
 }

@@ -1,7 +1,7 @@
 package BHML.aurum.scrolls.core;
 
-import BHML.aurum.Aurum;
 import BHML.aurum.scrolls.air.Gust;
+import BHML.aurum.scrolls.air.Windstride;
 import BHML.aurum.scrolls.earth.Rumble;
 import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
@@ -26,6 +26,7 @@ public class ScrollFactory {
         register(new Flash());
         register(new FlyingThunderGod());
         register(new Gust());
+        register(new Windstride());
         register(new Rumble());
         register(new TerraPath());
         register(new EndShot());

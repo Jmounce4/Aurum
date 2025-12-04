@@ -33,7 +33,7 @@ public class TerraPath implements Scroll {
 
     @Override
     public String getDescription(){
-        return "Create an earthy path in any direction";
+        return "Manipulate the earth to create a path in any direction";
     }
 
     @Override

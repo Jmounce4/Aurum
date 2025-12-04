@@ -43,7 +43,7 @@ public class Rumble implements Scroll {
 
     @Override
     public String getDescription(){
-        return "Rumble the ground around you for 10 seconds, damaging enemies";
+        return "Manipulate and rumble the ground around you for 10 seconds, damaging enemies";
     }
 
 

@@ -1,7 +1,7 @@
 package BHML.aurum.scrolls.core;
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.air.Gust;
-import BHML.aurum.scrolls.core.Scroll;
+import BHML.aurum.scrolls.air.Windstride;
 import BHML.aurum.scrolls.earth.Rumble;
 import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
@@ -61,6 +61,7 @@ public class ScrollUtils {
 
         meta.displayName(Component.text(scroll.getName()
                 , elementColor).decoration(TextDecoration.ITALIC, false).decoration(TextDecoration.BOLD, true));
+
 
         List<Component> lore = new ArrayList<>();
         lore.addAll(TextUtils.wrapLore(scroll.getDescription(), 50, NamedTextColor.WHITE));
@@ -144,6 +145,7 @@ public class ScrollUtils {
             new Rumble(),
             new TerraPath(),
             new Gust(),
+            new Windstride(),
             new LiquidLance(),
             new Zap(),
             new Flash(),

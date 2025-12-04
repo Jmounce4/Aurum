@@ -4,6 +4,7 @@ import BHML.aurum.scrolls.core.Scroll;
 import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.core.ScrollUtils;
 import BHML.aurum.scrolls.fire.Fireball;
+import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.utils.Keys;
 
 import org.bukkit.Material;
@@ -75,6 +76,16 @@ public class ScrollListener implements Listener{
 
         // cast the actual spell
         scroll.cast(p);
+        if (scroll.getId().equals("flyingthundergod")) {
+
+            FlyingThunderGod ftg = (FlyingThunderGod) scroll;
+
+            // If NO MARK → do NOT consume a charge
+            if (!ftg.hasValidMark(item)) {
+                //p.sendMessage("§cThis scroll has no marked location!");
+                return;  // STOP HERE - NO USE LOST
+            }
+        }
 
         // reduce uses
         ScrollUtils.setUses(item, uses - 1);
