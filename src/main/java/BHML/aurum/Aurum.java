@@ -1,17 +1,17 @@
 package BHML.aurum;
 
 import BHML.aurum.commands.GiveScrollCommand;
-import BHML.aurum.listeners.BowListener;
-import BHML.aurum.listeners.ScrollListener;
-import BHML.aurum.listeners.TradeListener;
-import BHML.aurum.listeners.WorldGenListener;
+import BHML.aurum.listeners.*;
 import BHML.aurum.scrolls.Lectern.LecternListener;
 import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
 import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.fire.Fireball;
+import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.utils.Keys;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import static BHML.aurum.scrolls.core.ScrollRegistry.register;
 
 public final class Aurum extends JavaPlugin {
 
@@ -52,6 +52,16 @@ public final class Aurum extends JavaPlugin {
         //Villager trades
         getServer().getPluginManager().registerEvents(new TradeListener(this), this);
 
+        // FTG
+        FlyingThunderGod ftg = new FlyingThunderGod();
+        register(ftg);
+
+        getServer().getPluginManager().registerEvents(
+                new FlyingThunderGodListener(this, ftg),
+                this
+        );
+
+        
         //testing bow mechanics
         getServer().getPluginManager().registerEvents(new BowListener(), this);
 

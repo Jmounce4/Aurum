@@ -7,6 +7,7 @@ import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
+import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.scrolls.lightning.Zap;
 import BHML.aurum.scrolls.water.LiquidLance;
 import BHML.aurum.utils.Keys;
@@ -146,6 +147,7 @@ public class ScrollUtils {
             new LiquidLance(),
             new Zap(),
             new Flash(),
+            new FlyingThunderGod(),
             new EndShot()
 
     );
