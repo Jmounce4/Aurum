@@ -3,6 +3,7 @@ import BHML.aurum.Aurum;
 import BHML.aurum.scrolls.core.Scroll;
 import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.core.ScrollUtils;
+import BHML.aurum.scrolls.fire.FireTower;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.utils.Keys;
@@ -74,6 +75,15 @@ public class ScrollListener implements Listener{
             return;
         }
 
+        if (scroll.getId().equals("firetower")) {
+
+            FireTower ft = (FireTower) scroll;
+
+            if (!ft.wasLastTowerPlacedSuccessfully(p)) {
+                return; // tower failed → do NOT consume a cast
+            }
+        }
+
         // cast the actual spell
         scroll.cast(p);
         if (scroll.getId().equals("flyingthundergod")) {
@@ -86,6 +96,9 @@ public class ScrollListener implements Listener{
                 return;  // STOP HERE - NO USE LOST
             }
         }
+
+
+
 
         // reduce uses
         ScrollUtils.setUses(item, uses - 1);

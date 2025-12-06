@@ -2,9 +2,11 @@ package BHML.aurum.scrolls.core;
 
 import BHML.aurum.scrolls.air.Gust;
 import BHML.aurum.scrolls.air.Windstride;
+import BHML.aurum.scrolls.earth.Fortify;
 import BHML.aurum.scrolls.earth.Rumble;
 import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
+import BHML.aurum.scrolls.fire.FireTower;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
@@ -22,6 +24,7 @@ public class ScrollFactory {
     static {
         // Register all scrolls HERE
         register(new Fireball());
+        register(new FireTower());
         register(new LiquidLance());
         register(new Geyser());
         register(new Zap());
@@ -31,6 +34,7 @@ public class ScrollFactory {
         register(new Windstride());
         register(new Rumble());
         register(new TerraPath());
+        register(new Fortify());
         register(new EndShot());
 
         // register(new ZapScroll());

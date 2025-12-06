@@ -2,9 +2,11 @@ package BHML.aurum.scrolls.core;
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.air.Gust;
 import BHML.aurum.scrolls.air.Windstride;
+import BHML.aurum.scrolls.earth.Fortify;
 import BHML.aurum.scrolls.earth.Rumble;
 import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
+import BHML.aurum.scrolls.fire.FireTower;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
@@ -143,8 +145,10 @@ public class ScrollUtils {
     private static final List<Scroll> ALL_SCROLLS = List.of(
             // example: FireScroll.INSTANCE, WaterScroll.INSTANCE, etc.
             new Fireball(),
+            new FireTower(),
             new Rumble(),
             new TerraPath(),
+            new Fortify(),
             new Gust(),
             new Windstride(),
             new LiquidLance(),

@@ -47,7 +47,7 @@ public class TerraPath implements Scroll {
     private static final int MAX_BLOCKS = 5;
     private static final int PILLAR_HEIGHT = 5;
 
-    private static final Set<Material> REPLACEABLE = Set.of(
+    public static final Set<Material> REPLACEABLE = Set.of(
             Material.AIR,
             Material.CAVE_AIR,
             Material.VOID_AIR,
@@ -98,14 +98,14 @@ public class TerraPath implements Scroll {
             Material.BAMBOO_SAPLING,
             Material.SWEET_BERRY_BUSH // Only early growth stages are truly passable
     );
-    private static final Set<Material> EARTH_MATERIALS = Set.of(
+    public static final Set<Material> EARTH_MATERIALS = Set.of(
             Material.DIRT, Material.GRASS_BLOCK, Material.COARSE_DIRT, Material.PODZOL,
             Material.SAND, Material.RED_SAND, Material.GRAVEL,
             Material.STONE, Material.COBBLESTONE, Material.ANDESITE, Material.DIORITE, Material.GRANITE,
             Material.OAK_PLANKS, Material.SPRUCE_PLANKS, Material.BIRCH_PLANKS, Material.JUNGLE_PLANKS,
             Material.ACACIA_PLANKS, Material.DARK_OAK_PLANKS, Material.MANGROVE_PLANKS
     );
-    private static final Material DEFAULT_MATERIAL = Material.DIRT;
+    public static final Material DEFAULT_MATERIAL = Material.DIRT;
 
 
 
