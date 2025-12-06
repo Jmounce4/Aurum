@@ -9,6 +9,7 @@ import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.scrolls.lightning.Zap;
+import BHML.aurum.scrolls.water.Geyser;
 import BHML.aurum.scrolls.water.LiquidLance;
 
 import java.util.Collections;
@@ -33,6 +34,7 @@ public class ScrollRegistry {
     public static void registerDefaults() {
         register(new Fireball());
         register(new LiquidLance());
+        register(new Geyser());
         register(new Zap());
         register(new Flash());
         register(new FlyingThunderGod());

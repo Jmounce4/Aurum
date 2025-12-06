@@ -9,6 +9,7 @@ import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.scrolls.lightning.Zap;
+import BHML.aurum.scrolls.water.Geyser;
 import BHML.aurum.scrolls.water.LiquidLance;
 import BHML.aurum.utils.Keys;
 
@@ -147,6 +148,7 @@ public class ScrollUtils {
             new Gust(),
             new Windstride(),
             new LiquidLance(),
+            new Geyser(),
             new Zap(),
             new Flash(),
             new FlyingThunderGod(),
