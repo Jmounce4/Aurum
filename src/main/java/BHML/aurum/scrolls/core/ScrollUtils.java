@@ -6,7 +6,8 @@ import BHML.aurum.scrolls.earth.Fortify;
 import BHML.aurum.scrolls.earth.Rumble;
 import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
-import BHML.aurum.scrolls.fire.FireTower;
+import BHML.aurum.scrolls.ender.Tether;
+import BHML.aurum.scrolls.fire.InfernoTower;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
@@ -145,7 +146,7 @@ public class ScrollUtils {
     private static final List<Scroll> ALL_SCROLLS = List.of(
             // example: FireScroll.INSTANCE, WaterScroll.INSTANCE, etc.
             new Fireball(),
-            new FireTower(),
+            new InfernoTower(),
             new Rumble(),
             new TerraPath(),
             new Fortify(),
@@ -156,7 +157,8 @@ public class ScrollUtils {
             new Zap(),
             new Flash(),
             new FlyingThunderGod(),
-            new EndShot()
+            new EndShot(),
+            new Tether()
 
     );
 

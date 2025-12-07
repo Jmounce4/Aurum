@@ -3,7 +3,8 @@ import BHML.aurum.Aurum;
 import BHML.aurum.scrolls.core.Scroll;
 import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.core.ScrollUtils;
-import BHML.aurum.scrolls.fire.FireTower;
+import BHML.aurum.scrolls.ender.Tether;
+import BHML.aurum.scrolls.fire.InfernoTower;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.utils.Keys;
@@ -75,17 +76,28 @@ public class ScrollListener implements Listener{
             return;
         }
 
-        if (scroll.getId().equals("firetower")) {
+        if (scroll.getId().equals("infernotower")) {
 
-            FireTower ft = (FireTower) scroll;
+            InfernoTower ft = (InfernoTower) scroll;
 
             if (!ft.wasLastTowerPlacedSuccessfully(p)) {
                 return; // tower failed → do NOT consume a cast
             }
         }
 
+        if (scroll.getId().equals("tether")) {
+
+            Tether tether = (Tether) scroll;
+
+            if (!tether.wasLastTowerPlacedSuccessfully(p)) {
+                return; // tower failed → do NOT consume a cast
+            }
+        }
+
         // cast the actual spell
         scroll.cast(p);
+
+
         if (scroll.getId().equals("flyingthundergod")) {
 
             FlyingThunderGod ftg = (FlyingThunderGod) scroll;

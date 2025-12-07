@@ -6,7 +6,8 @@ import BHML.aurum.scrolls.earth.Fortify;
 import BHML.aurum.scrolls.earth.Rumble;
 import BHML.aurum.scrolls.earth.TerraPath;
 import BHML.aurum.scrolls.ender.EndShot;
-import BHML.aurum.scrolls.fire.FireTower;
+import BHML.aurum.scrolls.ender.Tether;
+import BHML.aurum.scrolls.fire.InfernoTower;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.Flash;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
@@ -35,7 +36,7 @@ public class ScrollRegistry {
     // Call this at startup
     public static void registerDefaults() {
         register(new Fireball());
-        register(new FireTower());
+        register(new InfernoTower());
         register(new LiquidLance());
         register(new Geyser());
         register(new Zap());
@@ -47,6 +48,7 @@ public class ScrollRegistry {
         register(new TerraPath());
         register(new Fortify());
         register(new EndShot());
+        register(new Tether());
     }
 
 

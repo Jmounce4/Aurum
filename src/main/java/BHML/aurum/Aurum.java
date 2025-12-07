@@ -56,6 +56,9 @@ public final class Aurum extends JavaPlugin {
         FlyingThunderGod ftg = new FlyingThunderGod();
         register(ftg);
 
+        //Dont break towers
+        getServer().getPluginManager().registerEvents(new TowerListener(), this);
+
         getServer().getPluginManager().registerEvents(
                 new FlyingThunderGodListener(this, ftg),
                 this
