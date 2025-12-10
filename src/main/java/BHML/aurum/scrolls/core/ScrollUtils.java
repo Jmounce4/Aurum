@@ -1,4 +1,5 @@
 package BHML.aurum.scrolls.core;
+import BHML.aurum.Aurum;
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.air.Gust;
 import BHML.aurum.scrolls.air.Windstride;
@@ -29,6 +30,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -279,6 +281,37 @@ public class ScrollUtils {
 
     // Keeps track of which targets each caster has already been notified about
     private static final Map<UUID, Set<UUID>> blockedTargetsMap = new HashMap<>();
+
+
+
+
+    public static boolean canHit(Player attacker, LivingEntity target, boolean isMagic, Aurum plugin) {
+
+        if (target == null) return false;
+
+        // Always block any damage to tamed pets
+        if (target instanceof Tameable tame && tame.isTamed()) {
+            return false;
+        }
+
+        // If target is a player
+        if (target instanceof Player victim) {
+            // If magic (scrolls/towers), require attacker and victim to have PvP enabled.
+            if (isMagic) {
+                if (attacker == null) return false; // no attacker or owner offline -> cannot hit players with magic
+                return (plugin.hasPvPEnabled(attacker.getUniqueId()) && plugin.hasPvPEnabled(victim.getUniqueId()));
+            } else {
+                // non-magic (melee, etc) -> allow vanilla behavior (we do not block here)
+                return true;
+            }
+        }
+
+        // Non-player mobs are allowed (magic can hit mobs)
+        return true;
+    }
+
+
+
 
     /**
      * Checks targeting rules and, if blocked, sends a single notification per target per cast.

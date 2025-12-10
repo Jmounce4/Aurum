@@ -6,3 +6,7 @@ commands:
   givescroll:
     description: Gives a scroll by ID.
     usage: /givescroll <id>
+  aurum:
+    description: Main Aurum command handler
+    usage: /aurum <subcommand>
+    aliases: [ a ]

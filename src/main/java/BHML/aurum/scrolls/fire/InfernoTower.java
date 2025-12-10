@@ -200,6 +200,11 @@ public class InfernoTower implements Scroll {
                             continue;
                         }
 
+                    if (!ScrollUtils.canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
+
+
                     // draw visual beam
                     drawBeam(world, candleLoc, target.getEyeLocation().clone().add(0.0, -0.5, 0.0));
 

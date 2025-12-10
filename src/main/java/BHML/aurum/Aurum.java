@@ -1,5 +1,6 @@
 package BHML.aurum;
 
+import BHML.aurum.commands.AurumCommand;
 import BHML.aurum.commands.GiveScrollCommand;
 import BHML.aurum.listeners.*;
 import BHML.aurum.scrolls.Lectern.LecternListener;
@@ -9,16 +10,26 @@ import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
 import BHML.aurum.utils.Keys;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 import static BHML.aurum.scrolls.core.ScrollRegistry.register;
 
 public final class Aurum extends JavaPlugin {
 
+    // Players who have PVP enabled for this session
+    private final Set<UUID> pvpEnabled = new HashSet<>();
+
     private void registerCommands() {
         GiveScrollCommand giveScroll = new GiveScrollCommand(this);
         getCommand("givescroll").setExecutor(giveScroll);
         getCommand("givescroll").setTabCompleter(giveScroll);
+        getCommand("aurum").setExecutor(new AurumCommand(this));
+        getServer().getPluginManager().registerEvents(new AurumCombatListener(this), this);
     }
 
 
@@ -64,7 +75,9 @@ public final class Aurum extends JavaPlugin {
                 this
         );
 
-        
+
+        //PvP and pet protection
+
         //testing bow mechanics
         getServer().getPluginManager().registerEvents(new BowListener(), this);
 
@@ -75,4 +88,23 @@ public final class Aurum extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Aurum disabled.");
     }
+
+
+    public boolean hasPvPEnabled(UUID uuid) {
+        return pvpEnabled.contains(uuid);
+    }
+
+    public void enablePvP(Player player) {
+        pvpEnabled.add(player.getUniqueId());
+    }
+
+    public void disablePvP(Player player) {
+        pvpEnabled.remove(player.getUniqueId());
+    }
+
+    public void resetPvP(Player player) {
+        pvpEnabled.remove(player.getUniqueId());
+    }
+
+
 }

@@ -5,6 +5,7 @@ import BHML.aurum.scrolls.core.Scroll;
 
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.core.Scroll;
+import BHML.aurum.scrolls.core.ScrollUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -116,6 +117,10 @@ public class Fireball implements Scroll {
                         //Block Detection
                         if (!hasClearShot(player, target)) continue;
 
+                        if (!ScrollUtils.canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                            continue; // skip this target - will not deal damage nor spawn beam
+                        }
+
                         hitEntities.add(target.getUniqueId());
                         target.setFireTicks(100);
                         applySpellDamage(player, target, damage);
@@ -156,6 +161,10 @@ public class Fireball implements Scroll {
                     if (hitEntities.contains(target.getUniqueId())) continue;
 
                     if (!isExposedTo(loc, target)) continue;
+
+                    if (!ScrollUtils.canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
 
                     hitEntities.add(target.getUniqueId());
                     target.setFireTicks(100);
