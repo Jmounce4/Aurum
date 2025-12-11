@@ -1,8 +1,12 @@
 package BHML.aurum;
 
 import BHML.aurum.commands.AurumCommand;
+import BHML.aurum.commands.GiveRuneCommand;
 import BHML.aurum.commands.GiveScrollCommand;
 import BHML.aurum.listeners.*;
+import BHML.aurum.runes.core.RuneAnvilListener;
+import BHML.aurum.runes.core.RuneRegistry;
+import BHML.aurum.runes.normal.SniperRuneListener;
 import BHML.aurum.scrolls.Lectern.LecternListener;
 import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
@@ -29,6 +33,7 @@ public final class Aurum extends JavaPlugin {
         getCommand("givescroll").setExecutor(giveScroll);
         getCommand("givescroll").setTabCompleter(giveScroll);
         getCommand("aurum").setExecutor(new AurumCommand(this));
+        getCommand("giverune").setExecutor(new GiveRuneCommand(this));
         getServer().getPluginManager().registerEvents(new AurumCombatListener(this), this);
     }
 
@@ -79,7 +84,19 @@ public final class Aurum extends JavaPlugin {
         //PvP and pet protection
 
         //testing bow mechanics
-        getServer().getPluginManager().registerEvents(new BowListener(), this);
+        //getServer().getPluginManager().registerEvents(new BowListener(), this);
+
+
+
+        //RUNES
+
+        //Register Runes
+        RuneRegistry.registerDefaults();
+
+        //Rune Listeners
+        getServer().getPluginManager().registerEvents(new RuneAnvilListener(this), this);
+        getServer().getPluginManager().registerEvents(new SniperRuneListener(), this);
+
 
         getLogger().info("***Aurum loaded***");
     }

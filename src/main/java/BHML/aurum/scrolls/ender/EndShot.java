@@ -123,6 +123,9 @@ public class EndShot implements Scroll {
                         if (hitEntities.contains(target.getUniqueId())) continue;
 
                         if (!hasClearShot(player, target)) continue;
+                        if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                            continue; // skip this target - will not deal damage nor spawn beam
+                        }
 
                         hitEntities.add(target.getUniqueId());
                         applySpellDamage(player, target, onHitDamage);
@@ -180,6 +183,9 @@ public class EndShot implements Scroll {
                     if (hitEntities.contains(target.getUniqueId())) continue;
 
                     if (!isExposedTo(loc, target)) continue;
+                    if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
 
                     hitEntities.add(target.getUniqueId());
                     applySpellDamage(player, target, onHitDamage);

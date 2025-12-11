@@ -1,11 +1,13 @@
 package BHML.aurum.scrolls.lightning;
 
+import BHML.aurum.Aurum;
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.core.Scroll;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -121,6 +123,9 @@ public class Zap implements Scroll {
 
                     //Block Hit Detection
                     if (!hasClearShot(player, target)) continue;
+                    if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
                     //(!player.hasLineOfSight(target)) continue;
 
                     hit.add(target.getUniqueId());

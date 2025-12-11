@@ -80,6 +80,9 @@ public class Rumble implements Scroll {
                     if (target.hasMetadata("em_spell_damage")) continue;
 
                     //if (!handleBlockedTargetFeedback(player, target)) continue;
+                    if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
 
                     hitEntities.add(target.getUniqueId());
 

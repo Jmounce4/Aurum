@@ -1,5 +1,6 @@
 package BHML.aurum.scrolls.lightning;
 
+import BHML.aurum.Aurum;
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.core.Scroll;
 import org.bukkit.Location;
@@ -9,13 +10,13 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static BHML.aurum.scrolls.core.ScrollUtils.applySpellDamage;
-import static BHML.aurum.scrolls.core.ScrollUtils.handleBlockedTargetFeedback;
+import static BHML.aurum.scrolls.core.ScrollUtils.*;
 
 public class Flash implements Scroll {
 
@@ -93,6 +94,9 @@ public class Flash implements Scroll {
             for (Entity entity : point.getWorld().getNearbyEntities(point, HIT_RADIUS, HIT_RADIUS, HIT_RADIUS)) {
                 if (entity instanceof LivingEntity target && target != player && !damaged.contains(target)) {
                     //if (!handleBlockedTargetFeedback(player, target)) continue;
+                    if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
                     applySpellDamage(player, target, DAMAGE);
                     damaged.add(target);
                 }

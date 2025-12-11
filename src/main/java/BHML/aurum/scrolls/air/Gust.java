@@ -3,6 +3,7 @@ package BHML.aurum.scrolls.air;
 import BHML.aurum.Aurum;
 import BHML.aurum.elements.Element;
 import BHML.aurum.scrolls.core.Scroll;
+import BHML.aurum.scrolls.core.ScrollUtils;
 import org.bukkit.entity.Player;
 
 import org.bukkit.*;
@@ -105,6 +106,10 @@ public class Gust implements Scroll {
 
                     //My hit detection
                     if (!hasClearShot(player, target)) continue;
+
+                    if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
 
                     Vector toTarget = target.getLocation().toVector().subtract(origin.toVector());
                     double angle = Math.toDegrees(direction.angle(toTarget));

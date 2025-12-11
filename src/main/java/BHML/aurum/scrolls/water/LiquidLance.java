@@ -111,6 +111,9 @@ public class LiquidLance implements Scroll {
                     if (hitEntities.contains(target.getUniqueId())) continue;
                     //if (!handleBlockedTargetFeedback(player, target)) continue;
                     if (!hasClearShot(player, target)) continue;
+                    if (!canHit(player, target, true, JavaPlugin.getPlugin(Aurum.class))) {
+                        continue; // skip this target - will not deal damage nor spawn beam
+                    }
 
                     applySpellDamage(player, target, damage);
                     target.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2)); //40 ticks = 2 sec

@@ -6,6 +6,10 @@ commands:
   givescroll:
     description: Gives a scroll by ID.
     usage: /givescroll <id>
+  giverune:
+    description: Give a rune by ID
+    usage: /giverune <runeId>
+    aliases: [ gr ]
   aurum:
     description: Main Aurum command handler
     usage: /aurum <subcommand>
