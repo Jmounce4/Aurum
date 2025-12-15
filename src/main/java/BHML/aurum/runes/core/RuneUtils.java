@@ -112,6 +112,7 @@ public class RuneUtils {
         meta.lore(newLore);
     }
 
+
     public static void setRuneId(ItemMeta meta, String id) {
         meta.getPersistentDataContainer().set(
                 new NamespacedKey(JavaPlugin.getPlugin(Aurum.class), "rune_id"),
