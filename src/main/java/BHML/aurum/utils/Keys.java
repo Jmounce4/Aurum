@@ -10,6 +10,8 @@ public class Keys {
     public static NamespacedKey SCROLL_MAX_USES;
     public static NamespacedKey SCROLL_COOLDOWN;
     public static NamespacedKey CLERIC_SCROLL_ADDED;
+    public static NamespacedKey CLERIC_RUNE_ADDED;
+    public static NamespacedKey CLERIC_LUCK_ADDED;
 
 
     public static void init(JavaPlugin plugin) {
@@ -18,5 +20,7 @@ public class Keys {
         SCROLL_MAX_USES  = new NamespacedKey(plugin, "scroll_max_uses");
         SCROLL_COOLDOWN  = new NamespacedKey(plugin, "scroll_cd");
         CLERIC_SCROLL_ADDED = new NamespacedKey(plugin, "cleric_scroll_added");
+        CLERIC_RUNE_ADDED = new NamespacedKey(plugin, "cleric_rune_added");
+        CLERIC_LUCK_ADDED = new NamespacedKey(plugin, "cleric_luck_added");
     }
 }

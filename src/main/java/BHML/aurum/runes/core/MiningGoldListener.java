@@ -14,7 +14,7 @@ import java.util.Random;
 public class MiningGoldListener implements Listener {
 
     private static final Random RANDOM = new Random();
-    private static final int CHANCE = 64; // 1/64 chance
+    private static final int CHANCE = 2; // 1/64 chance
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
@@ -27,7 +27,7 @@ public class MiningGoldListener implements Listener {
         // Check if the drop was actually gold (not silk touch)
         boolean droppedGold = false;
         for (ItemStack drop : event.getBlock().getDrops()) {
-            if (drop.getType() == Material.GOLD_INGOT) {
+            if (drop.getType() == Material.RAW_GOLD) {
                 droppedGold = true;
                 break;
             }
