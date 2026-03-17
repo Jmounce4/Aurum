@@ -18,6 +18,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.text.format.NamedTextColor; // if needed
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,26 +52,7 @@ public class GiveRuneCommand implements CommandExecutor {
         }
 
         // --- Build rune item ---
-        Material mat = Material.matchMaterial(rune.getDisplayItem());
-        if (mat == null) mat = Material.GOLD_NUGGET;
-
-        ItemStack item = new ItemStack(mat);
-        ItemMeta meta = item.getItemMeta();
-
-        if (meta != null) {
-            // Use Adventure Component: name colored by element
-            Component displayName = rune.getElement().coloredName(rune.getName());
-            meta.displayName(displayName);
-
-            // Lore: show description in gray (Component)
-            Component desc = Component.text(rune.getDescription()).color(NamedTextColor.GRAY);
-            meta.lore(List.of(desc));
-
-            // Store rune ID in PDC as before (so anvil can read it)
-            RuneUtils.setRuneId(meta, rune.getId());
-
-            item.setItemMeta(meta);
-        }
+        ItemStack item = RuneUtils.createRuneItem(rune);
 
         player.getInventory().addItem(item);
         player.sendMessage(ChatColor.GREEN + "Given rune: " + rune.getName());

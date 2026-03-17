@@ -12,7 +12,7 @@ public enum Element {
     LIGHTNING(TextColor.color(255, 255, 0)),  // yellow
     WATER(TextColor.color(0, 120, 255)),        // blue
     EARTH(TextColor.color(80, 118, 0)),        // green
-    NORMAL(TextColor.color(205, 205, 205)),   // white
+    NORMAL(TextColor.color(221, 195, 162)),   // white
     ENDER(TextColor.color(128, 0, 128));      // purple
 
     private final TextColor color;
@@ -26,7 +26,7 @@ public enum Element {
     }
 
     public Component coloredName(String name) {
-        return Component.text(name).color(color);
+        return Component.text(name).color(color).decoration(net.kyori.adventure.text.format.TextDecoration.ITALIC, false);
     }
 
 }

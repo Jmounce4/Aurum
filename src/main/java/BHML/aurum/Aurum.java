@@ -4,6 +4,7 @@ import BHML.aurum.commands.AurumCommand;
 import BHML.aurum.commands.GiveRuneCommand;
 import BHML.aurum.commands.GiveScrollCommand;
 import BHML.aurum.listeners.*;
+import BHML.aurum.runes.core.MiningGoldListener;
 import BHML.aurum.runes.core.RuneAnvilListener;
 import BHML.aurum.runes.core.RuneRegistry;
 import BHML.aurum.runes.normal.SniperRuneListener;
@@ -96,6 +97,7 @@ public final class Aurum extends JavaPlugin {
         //Rune Listeners
         getServer().getPluginManager().registerEvents(new RuneAnvilListener(this), this);
         getServer().getPluginManager().registerEvents(new SniperRuneListener(), this);
+        getServer().getPluginManager().registerEvents(new MiningGoldListener(), this);
 
 
         getLogger().info("***Aurum loaded***");

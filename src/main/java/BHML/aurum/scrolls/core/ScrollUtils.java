@@ -43,10 +43,24 @@ import java.util.*;
 
 
 public class ScrollUtils {
+    
+    // Map elements to their corresponding banner patterns
+    private static Material getBannerPatternForElement(Element element) {
+        return switch (element) {
+            case AIR -> Material.GUSTER_BANNER_PATTERN;
+            case EARTH -> Material.FIELD_MASONED_BANNER_PATTERN;
+            case ENDER -> Material.SKULL_BANNER_PATTERN;
+            case FIRE -> Material.FLOWER_BANNER_PATTERN;
+            case LIGHTNING -> Material.BORDURE_INDENTED_BANNER_PATTERN;
+            case WATER -> Material.FLOW_BANNER_PATTERN;
+            case NORMAL -> Material.FLOWER_BANNER_PATTERN; // fallback
+        };
+    }
+    
     // ----- CREATE SCROLL ITEM -----
     public static ItemStack createScrollItem(Scroll scroll) {
 
-        ItemStack item = new ItemStack(Material.FLOWER_BANNER_PATTERN);
+        ItemStack item = new ItemStack(getBannerPatternForElement(scroll.getElement()));
         ItemMeta meta = item.getItemMeta();
 
 

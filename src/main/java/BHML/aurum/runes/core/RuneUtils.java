@@ -2,14 +2,18 @@ package BHML.aurum.runes.core;
 
 import BHML.aurum.Aurum;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 import java.util.*;
 
@@ -131,6 +135,62 @@ public class RuneUtils {
     public static boolean hasRune(ItemStack item) {
         if (item == null || !item.hasItemMeta()) return false;
         return getRuneId(item.getItemMeta()) != null;
+    }
+
+    /**
+     * Creates a complete rune item with proper formatting, glow effect, and non-stackable properties
+     * @param rune The rune to create an item for
+     * @return Complete ItemStack ready for use
+     */
+    public static ItemStack createRuneItem(Rune rune) {
+        // Determine material based on element
+        Material material;
+        if (rune.getElement().name().equals("NORMAL")) {
+            material = Material.matchMaterial(rune.getDisplayItem());
+            if (material == null) material = Material.GOLD_NUGGET;
+        } else {
+            material = Material.AMETHYST_SHARD;
+        }
+
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+
+        if (meta != null) {
+            // Use Adventure Component: name colored by element
+            Component displayName = rune.getElement().coloredName(rune.getName());
+            meta.displayName(displayName);
+
+            // Add enchantment glow effect
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+
+            // Lore: show description in white (Component)
+            List<Component> lore = new ArrayList<>();
+            lore.add(Component.text(rune.getDescription(), NamedTextColor.WHITE)
+                    .decoration(TextDecoration.ITALIC, false));
+            
+            // Add item type in gray text
+            String itemType = rune.getItem().substring(0, 1).toUpperCase() + rune.getItem().substring(1).toLowerCase();
+            lore.add(Component.text(itemType, NamedTextColor.GRAY)
+                    .decoration(TextDecoration.ITALIC, true));
+            
+            meta.lore(lore);
+
+            // Store rune ID in PDC
+            setRuneId(meta, rune.getId());
+            
+            // Make rune items non-stackable by adding a unique NBT tag
+            UUID uuid = UUID.randomUUID();
+            meta.getPersistentDataContainer().set(
+                new NamespacedKey(JavaPlugin.getPlugin(Aurum.class), "unique_item"),
+                PersistentDataType.STRING,
+                uuid.toString()
+            );
+
+            item.setItemMeta(meta);
+        }
+
+        return item;
     }
 
 
