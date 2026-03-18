@@ -1,6 +1,7 @@
 package BHML.aurum.runes.core;
 
 import BHML.aurum.runes.normal.Sniper;
+import BHML.aurum.runes.fire.FiredUp;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class RuneRegistry {
 
     public static void registerDefaults() {
         registerRune(new Sniper());
+        registerRune(new FiredUp());
 
     }
 

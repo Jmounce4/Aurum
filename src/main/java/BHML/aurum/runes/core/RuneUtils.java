@@ -1,6 +1,7 @@
 package BHML.aurum.runes.core;
 
 import BHML.aurum.Aurum;
+import BHML.aurum.utils.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -164,10 +165,9 @@ public class RuneUtils {
             meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            // Lore: show description in white (Component)
+            // Lore: show description in white (Component) with dynamic wrapping
             List<Component> lore = new ArrayList<>();
-            lore.add(Component.text(rune.getDescription(), NamedTextColor.WHITE)
-                    .decoration(TextDecoration.ITALIC, false));
+            lore.addAll(TextUtils.wrapLore(rune.getDescription(), 50, NamedTextColor.WHITE));
             
             // Add item type in gray text
             String itemType = rune.getItem().substring(0, 1).toUpperCase() + rune.getItem().substring(1).toLowerCase();
