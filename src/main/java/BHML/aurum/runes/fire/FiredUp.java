@@ -22,7 +22,7 @@ public class FiredUp implements Rune {
 
     @Override
     public String getDescription() {
-        return "Landing 3 consecutive fully charged attacks within 7 seconds fires you up for 7 seconds, enhancing your damage with splash fire effects.";
+        return "Landing consecutive attacks fires you up. Increase damage and deal AoE when Fired Up.";
     }
 
     @Override

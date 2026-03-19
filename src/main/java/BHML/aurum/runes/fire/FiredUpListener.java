@@ -53,6 +53,14 @@ public class FiredUpListener implements Listener {
         // Filter out sweep attacks - only process direct sword hits
         if (isSweepAttack(player, weapon, event)) return;
 
+        // Skip processing if this is spell damage (not a direct weapon hit)
+        // Spell damage has the player as damager but no weapon in main hand or the damage doesn't match expected weapon damage
+        double expectedWeaponDamage = getExpectedSwordDamage(weapon);
+        if (Math.abs(event.getDamage() - expectedWeaponDamage) > 0.5) {
+            // This is likely spell damage, not the original weapon hit
+            return;
+        }
+
         UUID playerId = player.getUniqueId();
         PlayerComboData comboData = playerCombos.computeIfAbsent(playerId, k -> new PlayerComboData());
         long currentTime = System.currentTimeMillis();
@@ -60,9 +68,10 @@ public class FiredUpListener implements Listener {
         // If player is already fired up, just reset timer and apply splash damage
         if (isFiredUp(playerId)) {
             resetFiredUpTimer(player);
-            // Apply 50% bonus damage to main target
-            double bonusDamage = event.getDamage() * 0.5;
+            // Apply 30% bonus damage to main target
+            double bonusDamage = event.getDamage() * 0.3;
             ScrollUtils.applySpellDamage(player, target, bonusDamage);
+            player.sendMessage(ChatColor.BLUE + "Damage dealt to target: " + event.getDamage() + " + " + bonusDamage + " = " + (event.getDamage() + bonusDamage));
             //target.setFireTicks(60); // Brief fire effect
             // Apply splash damage to nearby targets
             applySplashDamage(player, target, event.getDamage());
@@ -144,17 +153,17 @@ public class FiredUpListener implements Listener {
         // Only show activation message for new activations, not timer resets
         if (!wasAlreadyFiredUp) {
             player.sendMessage(ChatColor.GOLD + "You are Fired Up!");
-            player.playSound(player.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.5f, 1.2f);
+            player.playSound(player.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.3f, 0.7f);
         }
     }
 
     private void applySplashDamage(Player player, LivingEntity mainTarget, double originalDamage) {
         Location hitLocation = mainTarget.getLocation();
-        double splashDamage = originalDamage * 0.5;
-        double radius = 0.8;
+        double splashDamage = originalDamage * 0.3;
+        double radius = 1.4;
 
-        // Small particle effect to indicate 0.8 block AoE
-        hitLocation.getWorld().spawnParticle(Particle.FLAME, hitLocation, 7, 0.4, 0.4, 0.4, 0.05);
+        // Small particle effect to indicate 1.4 block AoE
+        hitLocation.getWorld().spawnParticle(Particle.FLAME, hitLocation, 14, 0.4, 0.4, 0.4, 0.06);
 
         // Apply splash damage to nearby entities (excluding main target)
         for (Entity entity : hitLocation.getWorld().getNearbyEntities(hitLocation, radius, radius, radius)) {
@@ -172,6 +181,7 @@ public class FiredUpListener implements Listener {
 
             // Apply splash damage
             ScrollUtils.applySpellDamage(player, target, splashDamage);
+            player.sendMessage(ChatColor.LIGHT_PURPLE + "AoE damage: " + splashDamage);
             //player.sendMessage(ChatColor.YELLOW + "Splash damage applied");
             //target.setFireTicks(60); // Brief fire effect
         }
