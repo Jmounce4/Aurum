@@ -53,28 +53,15 @@ public class FiredUpListener implements Listener {
         // Filter out sweep attacks - only process direct sword hits
         if (isSweepAttack(player, weapon, event)) return;
 
-        // Skip processing if this is spell damage (not a direct weapon hit)
-        // Spell damage has the player as damager but no weapon in main hand or the damage doesn't match expected weapon damage
-        double expectedWeaponDamage = getExpectedSwordDamage(weapon);
-        if (Math.abs(event.getDamage() - expectedWeaponDamage) > 0.5) {
-            // This is likely spell damage, not the original weapon hit
-            return;
-        }
-
         UUID playerId = player.getUniqueId();
         PlayerComboData comboData = playerCombos.computeIfAbsent(playerId, k -> new PlayerComboData());
         long currentTime = System.currentTimeMillis();
 
-        // If player is already fired up, just reset timer and apply splash damage
+        // If player is already fired up, just reset timer and apply AoE damage
         if (isFiredUp(playerId)) {
             resetFiredUpTimer(player);
-            // Apply 30% bonus damage to main target
-            double bonusDamage = event.getDamage() * 0.3;
-            ScrollUtils.applySpellDamage(player, target, bonusDamage);
-            player.sendMessage(ChatColor.BLUE + "Damage dealt to target: " + event.getDamage() + " + " + bonusDamage + " = " + (event.getDamage() + bonusDamage));
-            //target.setFireTicks(60); // Brief fire effect
-            // Apply splash damage to nearby targets
-            applySplashDamage(player, target, event.getDamage());
+            // Apply AoE damage centered on the main target (including the main target)
+            applyAoeDamage(player, target, event.getDamage());
             return;
         }
 
@@ -157,21 +144,20 @@ public class FiredUpListener implements Listener {
         }
     }
 
-    private void applySplashDamage(Player player, LivingEntity mainTarget, double originalDamage) {
+    private void applyAoeDamage(Player player, LivingEntity mainTarget, double originalDamage) {
         Location hitLocation = mainTarget.getLocation();
-        double splashDamage = originalDamage * 0.3;
-        double radius = 1.4;
+        double aoeDamage = originalDamage * 0.2; // 20% of original damage
+        double radius = 1.2;
 
-        // Small particle effect to indicate 1.4 block AoE
-        hitLocation.getWorld().spawnParticle(Particle.FLAME, hitLocation, 14, 0.4, 0.4, 0.4, 0.06);
-
-        // Apply splash damage to nearby entities (excluding main target)
+        // Create fire particle effect at the impact location
+        hitLocation.getWorld().spawnParticle(Particle.FLAME, hitLocation, 20, 0.6, 0.6, 0.6, 0.1);
+        
+        // Apply AoE damage to all entities in radius (including main target)
         for (Entity entity : hitLocation.getWorld().getNearbyEntities(hitLocation, radius, radius, radius)) {
             if (!(entity instanceof LivingEntity target)) continue;
-            if (target.equals(mainTarget)) continue; // Skip main target - already got bonus damage
             if (target.equals(player)) continue; // Don't damage self
 
-            // Check if target is exposed to splash (similar to fireball explosion logic)
+            // Check if target is exposed to AoE
             if (!ScrollUtils.isExposedTo(hitLocation, target)) continue;
 
             // Use ScrollUtils.canHit for proper hit detection
@@ -179,11 +165,15 @@ public class FiredUpListener implements Listener {
                 continue;
             }
 
-            // Apply splash damage
-            ScrollUtils.applySpellDamage(player, target, splashDamage);
-            player.sendMessage(ChatColor.LIGHT_PURPLE + "AoE damage: " + splashDamage);
-            //player.sendMessage(ChatColor.YELLOW + "Splash damage applied");
-            //target.setFireTicks(60); // Brief fire effect
+            // Apply AoE damage
+            ScrollUtils.applySpellDamage(player, target, aoeDamage);
+            
+            // Show damage message for clarity
+            if (target.equals(mainTarget)) {
+                player.sendMessage(ChatColor.BLUE + "Fired Up! Main target takes " + originalDamage + " + " + aoeDamage + " = " + (originalDamage + aoeDamage) + " damage");
+            } else {
+                player.sendMessage(ChatColor.LIGHT_PURPLE + "AoE damage: " + aoeDamage + " to nearby target");
+            }
         }
     }
 
@@ -196,34 +186,11 @@ public class FiredUpListener implements Listener {
         // Sweep attacks do less damage (1 damage + enchantment bonus) and have a specific damage pattern
         // The main hit does full damage, sweep hits do reduced damage
         
-        // Check if this is a sweep hit by damage amount
+        // Simple check: if damage is less than 2, it's likely a sweep attack
         // Sweep attacks typically do 1 damage + enchantment bonus
-        // If damage is very low compared to what a sword should do, it's likely a sweep
-        double expectedDamage = getExpectedSwordDamage(weapon);
-        return event.getDamage() < expectedDamage * 0.3; // Less than 30% of expected damage = sweep
+        return event.getDamage() < 4.0 && weapon.getType() != Material.WOODEN_SWORD;
     }
     
-    private double getExpectedSwordDamage(ItemStack sword) {
-        // Get base damage for sword type
-        double baseDamage = switch (sword.getType()) {
-            case WOODEN_SWORD -> 4.0;
-            case STONE_SWORD -> 5.0;
-            case IRON_SWORD -> 6.0;
-            case GOLDEN_SWORD -> 4.0;
-            case DIAMOND_SWORD -> 7.0;
-            case NETHERITE_SWORD -> 8.0;
-            default -> 6.0; // Default fallback
-        };
-        
-        // Add sharpness bonus if present
-        if (sword.containsEnchantment(Enchantment.SHARPNESS)) {
-            int level = sword.getEnchantmentLevel(Enchantment.SHARPNESS);
-            baseDamage += level * 1.25; // Each sharpness level adds 1.25 damage
-        }
-        
-        return baseDamage;
-    }
-
     private void resetFiredUpTimer(Player player) {
         // Extend fired up duration by restarting the 7-second timer
         UUID playerId = player.getUniqueId();
