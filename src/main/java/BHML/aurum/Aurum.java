@@ -87,7 +87,7 @@ public final class Aurum extends JavaPlugin {
         //PvP and pet protection
 
         //testing bow mechanics
-        //getServer().getPluginManager().registerEvents(new BowListener(), this);
+        getServer().getPluginManager().registerEvents(new BowListener(), this);
 
 
 

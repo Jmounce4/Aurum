@@ -178,22 +178,34 @@ public class AcrobatListener implements Listener {
         double peakHeight = currentHeight + (jumpVelocity * jumpVelocity * jumpBoostMultiplier) / (2 * 0.08); // 0.08 is gravity in Minecraft
         
         // Knock target up with flat 2-block height
-        // First lift entity slightly off ground to overcome ground friction
+        // Check if there is a block directly above target (2 block high space issue)
         Location targetLoc = target.getLocation();
-        targetLoc.setY(targetLoc.getY() + 1.0); // Raise off ground for knockup velocity
-        target.teleport(targetLoc);
+        boolean hasBlockAbove = targetLoc.clone().add(0, 2, 0).getBlock().getType().isSolid();
         
-        // Now apply the velocity
-        Vector targetVelocity = target.getVelocity();
-        targetVelocity.setY(0.7); //  knockup
-        target.setVelocity(targetVelocity);
+        if (hasBlockAbove) {
+            // Don't knockup if there are blocks above, just apply slow falling and effects
+            player.sendMessage(ChatColor.AQUA + "Jump Attack! No room to knock up!");
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 1.2f);
+        } else {
+            // First lift entity slightly off ground to overcome ground friction
+            targetLoc.setY(targetLoc.getY() + 1.0); // Raise off ground for knockup velocity
+            target.teleport(targetLoc);
+            
+            // Now apply the velocity
+            Vector targetVelocity = target.getVelocity();
+            targetVelocity.setY(0.7); //  knockup
+            target.setVelocity(targetVelocity);
+            
+            player.sendMessage(ChatColor.AQUA + "Jump Attack! Enemy knocked up!");
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 1.2f);
+        }
         
         // Mark that jump attack has been used
         data.hasUsedJumpAttack = true;
         
         // Apply slow falling to both player and target for 2 seconds
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 0, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 0, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20, 0, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20, 0, false, false));
         
         // Visual effects
         targetLoc.getWorld().spawnParticle(Particle.CLOUD, targetLoc, 10, 0.5, 0.5, 0.5, 0.1);
@@ -227,14 +239,23 @@ public class AcrobatListener implements Listener {
         
         if (bonusDamage == 4.0) {
             player.sendMessage(ChatColor.AQUA + "Falling Strike! +" + bonusDamage + " damage to airborne target!");
+            targetLoc.getWorld().spawnParticle(Particle.CRIT, targetLoc, 6, 0.3, 0.3, 0.3, 0.2);
+            targetLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, targetLoc, 2);
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.8f, 0.7f);
+
         } else {
             player.sendMessage(ChatColor.AQUA + "Falling Strike! +" + bonusDamage + " damage!");
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.6f, 0.8f);
         }
-        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.6f, 0.8f);
+
     }
 
     private void performCrouchAttack(Player player, LivingEntity target, EntityDamageByEntityEvent event) {
-        double bonusDamage = 3.0;
+        double bonusDamage = 1.0;
+
+        if (!target.isOnGround()) {
+            bonusDamage = 3.0; // Increased damage for airborne targets
+        }
         
         // Apply bonus damage
         event.setDamage(event.getDamage() + bonusDamage);
@@ -251,7 +272,7 @@ public class AcrobatListener implements Listener {
         
         // Visual effects
         Location targetLoc = target.getLocation();
-        targetLoc.getWorld().spawnParticle(Particle.EXPLOSION, targetLoc, 5, 0.3, 0.3, 0.3, 0.1);
+        targetLoc.getWorld().spawnParticle(Particle.EXPLOSION, targetLoc, 3, 0.3, 0.3, 0.3, 0.1);
         targetLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, targetLoc, 1);
         
         player.sendMessage(ChatColor.AQUA + "Crouch Thrust! +" + bonusDamage + " damage and strong knockback!");
