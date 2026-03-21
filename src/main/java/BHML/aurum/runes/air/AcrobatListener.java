@@ -58,6 +58,11 @@ public class AcrobatListener implements Listener {
         UUID playerId = player.getUniqueId();
         AcrobatPlayerData data = playerData.computeIfAbsent(playerId, k -> new AcrobatPlayerData());
 
+        // Prevent air attacks if player is in water
+        if (player.isInWater()) {
+            return;
+        }
+
         // Check if player is crouching in the air - this takes priority over other effects
         if (data.isSneaking && !player.isOnGround()) {
             performCrouchAttack(player, target, event);
@@ -220,7 +225,9 @@ public class AcrobatListener implements Listener {
         
         // Check if target is in the air (likely from jump knockup)
         if (!target.isOnGround()) {
-            bonusDamage = 4.0; // Increased damage for airborne targets
+            bonusDamage = 6.0; // Increased damage for airborne targets
+            // Remove slow falling from the knock up
+            target.removePotionEffect(PotionEffectType.SLOW_FALLING);
         }
         
         // Apply bonus damage
@@ -237,7 +244,7 @@ public class AcrobatListener implements Listener {
         targetLoc.getWorld().spawnParticle(Particle.CRIT, targetLoc, 8, 0.3, 0.3, 0.3, 0.1);
         targetLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, targetLoc, 1);
         
-        if (bonusDamage == 4.0) {
+        if (bonusDamage == 6.0) {
             player.sendMessage(ChatColor.AQUA + "Falling Strike! +" + bonusDamage + " damage to airborne target!");
             targetLoc.getWorld().spawnParticle(Particle.CRIT, targetLoc, 6, 0.3, 0.3, 0.3, 0.2);
             targetLoc.getWorld().spawnParticle(Particle.SWEEP_ATTACK, targetLoc, 2);

@@ -42,7 +42,7 @@ import java.util.Random;
 
         private final Random random = new Random();
 
-        // CLERIC — Random rune at LEVEL 3, scroll at LEVEL 4, luck potion at LEVEL 5
+        // CLERIC — luck potion at LEVEL 3, rune at LEVEL 4, scroll at LEVEL 5
 
         @EventHandler
         public void onClericLevelUp(VillagerAcquireTradeEvent event) {
@@ -52,11 +52,11 @@ import java.util.Random;
 
             // Handle different levels
             if (villager.getVillagerLevel() == 3) {
-                addRuneTrade(villager);
-            } else if (villager.getVillagerLevel() == 4) {
-                addScrollTrade(villager);
-            } else if (villager.getVillagerLevel() == 5) {
                 addLuckPotionTrade(villager);
+            } else if (villager.getVillagerLevel() == 4) {
+                addRuneTrade(villager);
+            } else if (villager.getVillagerLevel() == 5) {
+                addScrollTrade(villager);
             }
         }
 
@@ -80,7 +80,7 @@ import java.util.Random;
                     );
                     
                     MerchantRecipe recipe = new MerchantRecipe(randomRune, 1);
-                    recipe.addIngredient(new ItemStack(Material.EMERALD, 64));
+                    recipe.addIngredient(new ItemStack(Material.EMERALD, 50));
 
                     trades.add(recipe);
                     villager.setRecipes(trades);
@@ -105,7 +105,7 @@ import java.util.Random;
                 MerchantRecipe recipe = new MerchantRecipe(
                         ScrollUtils.getRandomScroll(), 1
                 );
-                recipe.addIngredient(new ItemStack(Material.EMERALD, 128));
+                recipe.addIngredient(new ItemStack(Material.EMERALD, 64));
 
                 trades.add(recipe);
                 villager.setRecipes(trades);
@@ -122,26 +122,37 @@ import java.util.Random;
                     (byte) 1
             );
 
-            // Add a luck potion trade with random cost 28-34 emeralds
+            // Add a luck potion or dragon's breath trade (50% chance each)
             Bukkit.getScheduler().runTask(plugin, () -> {
                 List<MerchantRecipe> trades = new ArrayList<>(villager.getRecipes());
 
-                ItemStack luckPotion = new ItemStack(Material.POTION);
-                PotionMeta meta = (PotionMeta) luckPotion.getItemMeta();
-
-                if (meta != null) {
-                    meta.addCustomEffect(
-                            new PotionEffect(PotionEffectType.LUCK, 6000, 0), // 3 minutes
-                            true
-                    );
-                    luckPotion.setItemMeta(meta);
+                ItemStack tradeItem;
+                String displayName;
+                
+                if (random.nextBoolean()) {
+                    // Luck potion
+                    tradeItem = new ItemStack(Material.POTION);
+                    PotionMeta meta = (PotionMeta) tradeItem.getItemMeta();
+                    
+                    if (meta != null) {
+                        meta.addCustomEffect(
+                                new PotionEffect(PotionEffectType.LUCK, 6000, 0), // 3 minutes
+                                true
+                        );
+                        meta.setDisplayName("§aPotion of Luck");
+                        meta.setColor(Color.GREEN);
+                        tradeItem.setItemMeta(meta);
+                    }
+                    displayName = "Luck Potion";
+                } else {
+                    // Dragon's Breath
+                    tradeItem = new ItemStack(Material.DRAGON_BREATH);
+                    displayName = "Dragon's Breath";
                 }
 
                 int cost = 28 + random.nextInt(7); // 28-34 emeralds
-                MerchantRecipe recipe = new MerchantRecipe(luckPotion, 1);
+                MerchantRecipe recipe = new MerchantRecipe(tradeItem, 4);
                 recipe.addIngredient(new ItemStack(Material.EMERALD, cost));
-                meta.setDisplayName("§aPotion of Luck");
-                meta.setColor(Color.GREEN);
 
                 trades.add(recipe);
                 villager.setRecipes(trades);
