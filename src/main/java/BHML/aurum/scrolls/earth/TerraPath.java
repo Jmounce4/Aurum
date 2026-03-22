@@ -39,7 +39,7 @@ public class TerraPath implements Scroll {
     @Override
     public int getGoldCost() { return 1; }
     @Override
-    public int getRestoreAmount() { return 30; }
+    public int getRestoreAmount() { return 20; }
     @Override
     public int getCooldown() { return 100; }  //0.10 seconds?
 

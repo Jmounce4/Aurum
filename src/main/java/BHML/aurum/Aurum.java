@@ -9,6 +9,7 @@ import BHML.aurum.runes.core.RuneAnvilListener;
 import BHML.aurum.runes.core.RuneRegistry;
 import BHML.aurum.runes.normal.SniperRuneListener;
 import BHML.aurum.runes.normal.FocusRuneListener;
+import BHML.aurum.runes.normal.HunterRuneListener;
 import BHML.aurum.runes.fire.FiredUpListener;
 import BHML.aurum.runes.air.AcrobatListener;
 import BHML.aurum.runes.lightning.ShockingEntryListener;
@@ -102,6 +103,7 @@ public final class Aurum extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RuneAnvilListener(this), this);
         getServer().getPluginManager().registerEvents(new SniperRuneListener(), this);
         getServer().getPluginManager().registerEvents(new FocusRuneListener(), this);
+        getServer().getPluginManager().registerEvents(new HunterRuneListener(), this);
         getServer().getPluginManager().registerEvents(new FiredUpListener(), this);
         getServer().getPluginManager().registerEvents(new AcrobatListener(), this);
         getServer().getPluginManager().registerEvents(new ShockingEntryListener(), this);
