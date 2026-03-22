@@ -1,6 +1,7 @@
 package BHML.aurum.runes.core;
 
 import BHML.aurum.runes.normal.Sniper;
+import BHML.aurum.runes.normal.Focus;
 import BHML.aurum.runes.fire.FiredUp;
 import BHML.aurum.runes.air.Acrobat;
 import BHML.aurum.runes.lightning.ShockingEntry;
@@ -27,6 +28,7 @@ public class RuneRegistry {
 
     public static void registerDefaults() {
         registerRune(new Sniper());
+        registerRune(new Focus());
         registerRune(new FiredUp());
         registerRune(new Acrobat());
         registerRune(new ShockingEntry());

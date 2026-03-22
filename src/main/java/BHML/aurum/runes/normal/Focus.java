@@ -3,7 +3,7 @@ package BHML.aurum.runes.normal;
 import BHML.aurum.elements.Element;
 import BHML.aurum.runes.core.Rune;
 
-public class Sniper implements Rune {
+public class Focus implements Rune {
 
     @Override
     public Element getElement() {
@@ -12,17 +12,17 @@ public class Sniper implements Rune {
 
     @Override
     public String getId() {
-        return "sniper";
+        return "focus";
     }
 
     @Override
     public String getName() {
-        return "Sniper";
+        return "Focus";
     }
 
     @Override
     public String getDescription() {
-        return "Deal more damage the further your target is.";
+        return "Shoot further and more accurately. Crouch for more focus.";
     }
 
     @Override
@@ -39,6 +39,4 @@ public class Sniper implements Rune {
     public String getItem() {
         return "bow";
     }
-
-
 }
