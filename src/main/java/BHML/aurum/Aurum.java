@@ -16,6 +16,7 @@ import BHML.aurum.runes.lightning.ShockingEntryListener;
 import BHML.aurum.scrolls.Lectern.LecternListener;
 import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
+import BHML.aurum.runes.core.RuneParticleTask;
 import BHML.aurum.scrolls.core.ScrollRegistry;
 import BHML.aurum.scrolls.fire.Fireball;
 import BHML.aurum.scrolls.lightning.FlyingThunderGod;
@@ -61,6 +62,7 @@ public final class Aurum extends JavaPlugin {
 
         //Register passive particle effects
         new ScrollParticleTask(this).runTaskTimer(this, 0L, 5L);
+        new RuneParticleTask(this).runTaskTimer(this, 0L, 5L);
 
         //Right Clicking Lecterns
         getServer().getPluginManager().registerEvents(new LecternListener(this), this);

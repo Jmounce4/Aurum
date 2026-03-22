@@ -42,19 +42,88 @@ public class RuneUtils {
         if (item == null) return false;
 
         String type = item.getType().name();
+        String runeItemType = rune.getItem().toLowerCase();
 
         // Validate item type matches rune.getItem()
-        return switch (rune.getItem().toLowerCase()) {
+        boolean validItem = switch (runeItemType) {
             case "bow"       -> type.contains("BOW");
             case "sword"     -> type.contains("SWORD");
             case "pickaxe"   -> type.contains("PICKAXE");
             case "chestplate"-> type.contains("CHESTPLATE");
             default -> false;
         };
+        
+        if (!validItem) return false;
+        
+        // Check total rune limit
+        List<String> currentRunes = getRuneIds(item);
+        if (currentRunes.size() >= RuneLimits.getMaxRunes(runeItemType)) {
+            return false;
+        }
+        
+        // Check elemental rune limit
+        if (RuneLimits.isElemental(rune.getElement())) {
+            int elementalCount = countElementalRunes(item);
+            if (elementalCount >= RuneLimits.getMaxElementalRunes(runeItemType)) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     public static int getMaxRunes(ItemStack item) {
-        return item.getType().name().contains("CHESTPLATE") ? 1 : 2;
+        if (item == null) return 0;
+        
+        String type = item.getType().name();
+        if (type.contains("CHESTPLATE")) return RuneLimits.getMaxRunes("chestplate");
+        if (type.contains("SWORD")) return RuneLimits.getMaxRunes("sword");
+        if (type.contains("BOW")) return RuneLimits.getMaxRunes("bow");
+        if (type.contains("PICKAXE")) return RuneLimits.getMaxRunes("pickaxe");
+        
+        return 0;
+    }
+    
+    /**
+     * Counts the number of elemental runes on an item
+     * @param item The item to check
+     * @return Number of elemental runes
+     */
+    public static int countElementalRunes(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) return 0;
+        
+        int count = 0;
+        List<String> runeIds = getRuneIds(item);
+        
+        for (String id : runeIds) {
+            Rune rune = RuneRegistry.getRune(id);
+            if (rune != null && RuneLimits.isElemental(rune.getElement())) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    /**
+     * Counts the number of normal (non-elemental) runes on an item
+     * @param item The item to check
+     * @return Number of normal runes
+     */
+    public static int countNormalRunes(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) return 0;
+        
+        int count = 0;
+        List<String> runeIds = getRuneIds(item);
+        
+        for (String id : runeIds) {
+            Rune rune = RuneRegistry.getRune(id);
+            if (rune != null && !RuneLimits.isElemental(rune.getElement())) {
+                count++;
+            }
+        }
+        
+        return count;
     }
 
     public static void applyRune(ItemStack item, Rune rune) {
