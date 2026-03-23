@@ -16,6 +16,7 @@ import BHML.aurum.runes.earth.AbsorbListener;
 import BHML.aurum.runes.ender.MonsterMinerListener;
 import BHML.aurum.runes.air.AcrobatListener;
 import BHML.aurum.runes.lightning.ShockingEntryListener;
+import BHML.aurum.runes.water.FlowListener;
 import BHML.aurum.scrolls.Lectern.LecternListener;
 import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
@@ -115,6 +116,7 @@ public final class Aurum extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MonsterMinerListener(this), this);
         getServer().getPluginManager().registerEvents(new AcrobatListener(), this);
         getServer().getPluginManager().registerEvents(new ShockingEntryListener(), this);
+        getServer().getPluginManager().registerEvents(new FlowListener(this), this);
         getServer().getPluginManager().registerEvents(new MiningGoldListener(), this);
 
 

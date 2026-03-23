@@ -9,6 +9,7 @@ import BHML.aurum.runes.earth.Absorb;
 import BHML.aurum.runes.ender.MonsterMiner;
 import BHML.aurum.runes.air.Acrobat;
 import BHML.aurum.runes.lightning.ShockingEntry;
+import BHML.aurum.runes.water.Flow;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public class RuneRegistry {
         registerRune(new MonsterMiner());
         registerRune(new Acrobat());
         registerRune(new ShockingEntry());
+        registerRune(new Flow());
 
     }
 
