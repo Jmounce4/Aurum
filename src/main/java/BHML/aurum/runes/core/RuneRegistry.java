@@ -3,7 +3,10 @@ package BHML.aurum.runes.core;
 import BHML.aurum.runes.normal.Sniper;
 import BHML.aurum.runes.normal.Focus;
 import BHML.aurum.runes.normal.Hunter;
+import BHML.aurum.runes.normal.Experienced;
 import BHML.aurum.runes.fire.FiredUp;
+import BHML.aurum.runes.earth.Absorb;
+import BHML.aurum.runes.ender.MonsterMiner;
 import BHML.aurum.runes.air.Acrobat;
 import BHML.aurum.runes.lightning.ShockingEntry;
 
@@ -31,7 +34,10 @@ public class RuneRegistry {
         registerRune(new Sniper());
         registerRune(new Focus());
         registerRune(new Hunter());
+        registerRune(new Experienced());
         registerRune(new FiredUp());
+        registerRune(new Absorb());
+        registerRune(new MonsterMiner());
         registerRune(new Acrobat());
         registerRune(new ShockingEntry());
 
