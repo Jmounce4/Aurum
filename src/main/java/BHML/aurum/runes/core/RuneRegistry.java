@@ -7,6 +7,7 @@ import BHML.aurum.runes.normal.Experienced;
 import BHML.aurum.runes.fire.FiredUp;
 import BHML.aurum.runes.earth.Absorb;
 import BHML.aurum.runes.ender.MonsterMiner;
+import BHML.aurum.runes.ender.SoulStrike;
 import BHML.aurum.runes.air.Acrobat;
 import BHML.aurum.runes.lightning.ShockingEntry;
 import BHML.aurum.runes.water.Flow;
@@ -39,6 +40,7 @@ public class RuneRegistry {
         registerRune(new FiredUp());
         registerRune(new Absorb());
         registerRune(new MonsterMiner());
+        registerRune(new SoulStrike());
         registerRune(new Acrobat());
         registerRune(new ShockingEntry());
         registerRune(new Flow());
