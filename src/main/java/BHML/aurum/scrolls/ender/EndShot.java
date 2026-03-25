@@ -106,9 +106,10 @@ public class EndShot implements Scroll {
                         return;
                     }
 
-                    // Visual travel particles
-                    world.spawnParticle(Particle.DUST, current, 3, 0.06, 0.06, 0.06, dust);
-                    world.spawnParticle(Particle.PORTAL, current, 2, 0.06, 0.06, 0.06, 0.05);
+                    // Visual travel particles - offset to start further in front
+                    Location visualLoc = current.clone().add(direction.clone().normalize().multiply(1.5));
+                    world.spawnParticle(Particle.DUST, visualLoc, 3, 0.06, 0.06, 0.06, dust);
+                    world.spawnParticle(Particle.PORTAL, visualLoc, 2, 0.06, 0.06, 0.06, 0.05);
 
                     // Sound (light)
                     if (tick % 6 == 0)

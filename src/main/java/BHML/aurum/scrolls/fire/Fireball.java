@@ -100,10 +100,11 @@ public class Fireball implements Scroll {
                         return;
                     }
 
-                    // Visuals
-                    world.spawnParticle(Particle.FLAME, current, 2, 0.05, 0.05, 0.05, 0.01);
-                    world.spawnParticle(Particle.SMOKE, current, 1, 0.05, 0.05, 0.05, 0.02);
-                    world.playSound(current, Sound.BLOCK_CAMPFIRE_CRACKLE, 0.1f, 2.0f);
+                    // Visuals - offset to start further in front
+                    Location visualLoc = current.clone().add(currentVelocity.clone().normalize().multiply(1.5));
+                    world.spawnParticle(Particle.FLAME, visualLoc, 2, 0.05, 0.05, 0.05, 0.01);
+                    world.spawnParticle(Particle.SMOKE, visualLoc, 1, 0.05, 0.05, 0.05, 0.02);
+                    //world.playSound(current, Sound.BLOCK_CAMPFIRE_CRACKLE, 0.1f, 2.0f);
 
                     // Entity hit check
                     for (Entity entity : world.getNearbyEntities(current, hitRadius, hitRadius, hitRadius)) {

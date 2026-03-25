@@ -70,7 +70,13 @@ public class FlowListener implements Listener {
         
         Player player = (Player) event.getEntity();
         
-        // Remove 10 flow stacks when player takes any damage
+        // Don't remove flow stacks if player is blocking with a shield
+        if (player.isBlocking()) {
+            plugin.getLogger().info("Flow: " + player.getName() + " blocked hit with shield, keeping flow stacks");
+            return;
+        }
+        
+        // Remove 10 flow stacks when player takes any damage (not blocked)
         UUID playerId = player.getUniqueId();
         int currentStacks = playerStacks.getOrDefault(playerId, 0);
         

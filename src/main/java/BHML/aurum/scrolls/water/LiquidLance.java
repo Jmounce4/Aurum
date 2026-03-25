@@ -98,11 +98,12 @@ public class LiquidLance implements Scroll {
                     return;
                 }
 
-                // Visual effects
-                world.spawnParticle(Particle.SPLASH, point, 30, 0.2, 0.2, 0.2, 0.01);
-                world.spawnParticle(Particle.SPLASH, point, 50, 0.1, 0.1, 0.1, 0.01);
+                // Visual effects - offset to start further in front
+                Location visualLoc = point.clone().add(direction.clone().normalize().multiply(1.5));
+                world.spawnParticle(Particle.SPLASH, visualLoc, 30, 0.2, 0.2, 0.2, 0.01);
+                world.spawnParticle(Particle.SPLASH, visualLoc, 50, 0.1, 0.1, 0.1, 0.01);
                 //Particle.DustOptions waterColor = new Particle.DustOptions(Color.fromRGB(0, 100, 255), 1.0f);
-                //world.spawnParticle(Particle.DUST, point, 2, 0.2, 0.2, 0.2, 0.01, waterColor);
+                //world.spawnParticle(Particle.DUST, visualLoc, 2, 0.2, 0.2, 0.2, 0.01, waterColor);
                 world.playSound(point, Sound.ITEM_BUCKET_EMPTY, 0.2f, 2f);
 
                 for (Entity entity : world.getNearbyEntities(point, hitRadius, hitRadius, hitRadius)) {
