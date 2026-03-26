@@ -12,12 +12,16 @@ import BHML.aurum.runes.normal.FocusRuneListener;
 import BHML.aurum.runes.normal.HunterRuneListener;
 import BHML.aurum.runes.normal.ExperiencedListener;
 import BHML.aurum.runes.fire.FiredUpListener;
+import BHML.aurum.runes.fire.SmeltListener;
 import BHML.aurum.runes.earth.AbsorbListener;
+import BHML.aurum.runes.earth.TrenchListener;
 import BHML.aurum.runes.ender.MonsterMinerListener;
 import BHML.aurum.runes.ender.SoulStrikeListener;
 import BHML.aurum.runes.air.AcrobatListener;
+import BHML.aurum.runes.air.VacuumListener;
 import BHML.aurum.runes.lightning.ShockingEntryListener;
 import BHML.aurum.runes.water.FlowListener;
+import BHML.aurum.runes.water.CascadeListener;
 import BHML.aurum.scrolls.Lectern.LecternListener;
 import BHML.aurum.scrolls.Lectern.RefillGUIListener;
 import BHML.aurum.scrolls.core.ScrollParticleTask;
@@ -113,12 +117,16 @@ public final class Aurum extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HunterRuneListener(), this);
         getServer().getPluginManager().registerEvents(new ExperiencedListener(), this);
         getServer().getPluginManager().registerEvents(new FiredUpListener(), this);
+        getServer().getPluginManager().registerEvents(new SmeltListener(), this);
         getServer().getPluginManager().registerEvents(new AbsorbListener(this), this);
+        getServer().getPluginManager().registerEvents(new TrenchListener(), this);
         getServer().getPluginManager().registerEvents(new MonsterMinerListener(this), this);
         getServer().getPluginManager().registerEvents(new SoulStrikeListener(), this);
         getServer().getPluginManager().registerEvents(new AcrobatListener(), this);
+        getServer().getPluginManager().registerEvents(new VacuumListener(), this);
         getServer().getPluginManager().registerEvents(new ShockingEntryListener(), this);
         getServer().getPluginManager().registerEvents(new FlowListener(this), this);
+        getServer().getPluginManager().registerEvents(new CascadeListener(), this);
         getServer().getPluginManager().registerEvents(new MiningGoldListener(), this);
 
 

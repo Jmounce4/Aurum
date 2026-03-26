@@ -5,12 +5,16 @@ import BHML.aurum.runes.normal.Focus;
 import BHML.aurum.runes.normal.Hunter;
 import BHML.aurum.runes.normal.Experienced;
 import BHML.aurum.runes.fire.FiredUp;
+import BHML.aurum.runes.fire.Smelt;
 import BHML.aurum.runes.earth.Absorb;
+import BHML.aurum.runes.earth.Trench;
 import BHML.aurum.runes.ender.MonsterMiner;
 import BHML.aurum.runes.ender.SoulStrike;
 import BHML.aurum.runes.air.Acrobat;
+import BHML.aurum.runes.air.Vacuum;
 import BHML.aurum.runes.lightning.ShockingEntry;
 import BHML.aurum.runes.water.Flow;
+import BHML.aurum.runes.water.Cascade;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,12 +42,16 @@ public class RuneRegistry {
         registerRune(new Hunter());
         registerRune(new Experienced());
         registerRune(new FiredUp());
+        registerRune(new Smelt());
         registerRune(new Absorb());
+        registerRune(new Trench());
         registerRune(new MonsterMiner());
         registerRune(new SoulStrike());
         registerRune(new Acrobat());
+        registerRune(new Vacuum());
         registerRune(new ShockingEntry());
         registerRune(new Flow());
+        registerRune(new Cascade());
 
     }
 

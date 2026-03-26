@@ -85,8 +85,8 @@ public class FlowListener implements Listener {
             playerStacks.put(playerId, newStacks);
             updatePlayerBuffs(player);
             
-            plugin.getLogger().info("Flow: " + player.getName() + " was hit, lost " + 
-                (currentStacks - newStacks) + " stacks, now has " + newStacks);
+            //plugin.getLogger().info("Flow: " + player.getName() + " was hit, lost " +
+                //(currentStacks - newStacks) + " stacks, now has " + newStacks);
         }
     }
     
@@ -145,7 +145,7 @@ public class FlowListener implements Listener {
         boolean hasFlowSword = hasFlowRune(player);
         
         // Debug logging (remove this after fixing)
-        plugin.getLogger().info("Flow update: " + player.getName() + " stacks=" + stacks + " hasSword=" + hasFlowSword);
+        //plugin.getLogger().info("Flow update: " + player.getName() + " stacks=" + stacks + " hasSword=" + hasFlowSword);
         
         // Always reset attributes first to ensure clean state
         resetPlayerAttributes(player);
@@ -153,7 +153,7 @@ public class FlowListener implements Listener {
         // Only apply buffs if holding Flow sword AND have stacks
         if (stacks > 0 && hasFlowSword) {
             applyFlowBuffs(player, stacks);
-            plugin.getLogger().info("Flow applied: " + stacks + " stacks to " + player.getName());
+            //plugin.getLogger().info("Flow applied: " + stacks + " stacks to " + player.getName());
         }
     }
     

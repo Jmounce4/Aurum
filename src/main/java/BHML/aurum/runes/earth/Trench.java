@@ -3,7 +3,7 @@ package BHML.aurum.runes.earth;
 import BHML.aurum.elements.Element;
 import BHML.aurum.runes.core.Rune;
 
-public class Absorb implements Rune {
+public class Trench implements Rune {
     
     @Override
     public Element getElement() {
@@ -12,17 +12,17 @@ public class Absorb implements Rune {
 
     @Override
     public String getId() {
-        return "absorb";
+        return "trench";
     }
 
     @Override
     public String getName() {
-        return "Absorb";
+        return "Trench";
     }
 
     @Override
     public String getDescription() {
-        return "Killing a target gives you bonus Health & Damage for 10 minutes (up to 10 stacks)";
+        return "Breaks all blocks within a 3x3 radius around the mined block";
     }
 
     @Override
@@ -37,6 +37,6 @@ public class Absorb implements Rune {
 
     @Override
     public String getItem() {
-        return "sword";
+        return "pickaxe";
     }
 }

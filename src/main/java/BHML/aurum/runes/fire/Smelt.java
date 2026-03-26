@@ -1,28 +1,28 @@
-package BHML.aurum.runes.earth;
+package BHML.aurum.runes.fire;
 
 import BHML.aurum.elements.Element;
 import BHML.aurum.runes.core.Rune;
 
-public class Absorb implements Rune {
+public class Smelt implements Rune {
     
     @Override
     public Element getElement() {
-        return Element.EARTH;
+        return Element.FIRE;
     }
 
     @Override
     public String getId() {
-        return "absorb";
+        return "smelt";
     }
 
     @Override
     public String getName() {
-        return "Absorb";
+        return "Smelt";
     }
 
     @Override
     public String getDescription() {
-        return "Killing a target gives you bonus Health & Damage for 10 minutes (up to 10 stacks)";
+        return "Automatically smelts ores and grants +1 XP per ore mined";
     }
 
     @Override
@@ -37,6 +37,6 @@ public class Absorb implements Rune {
 
     @Override
     public String getItem() {
-        return "sword";
+        return "pickaxe";
     }
 }

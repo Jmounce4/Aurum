@@ -1,33 +1,33 @@
-package BHML.aurum.runes.earth;
+package BHML.aurum.runes.air;
 
 import BHML.aurum.elements.Element;
 import BHML.aurum.runes.core.Rune;
 
-public class Absorb implements Rune {
-    
+public class Vacuum implements Rune {
+
     @Override
     public Element getElement() {
-        return Element.EARTH;
+        return Element.AIR;
     }
 
     @Override
     public String getId() {
-        return "absorb";
+        return "vacuum";
     }
 
     @Override
     public String getName() {
-        return "Absorb";
+        return "Vacuum";
     }
 
     @Override
     public String getDescription() {
-        return "Killing a target gives you bonus Health & Damage for 10 minutes (up to 10 stacks)";
+        return "Gain haste and pull in nearby items on the ground";
     }
 
     @Override
     public int getCooldown() {
-        return 0; // No cooldown - passive effect
+        return 0; // Passive effect
     }
 
     @Override
@@ -37,6 +37,6 @@ public class Absorb implements Rune {
 
     @Override
     public String getItem() {
-        return "sword";
+        return "pickaxe";
     }
 }

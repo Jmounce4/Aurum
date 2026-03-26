@@ -1,28 +1,28 @@
-package BHML.aurum.runes.earth;
+package BHML.aurum.runes.water;
 
 import BHML.aurum.elements.Element;
 import BHML.aurum.runes.core.Rune;
 
-public class Absorb implements Rune {
+public class Cascade implements Rune {
     
     @Override
     public Element getElement() {
-        return Element.EARTH;
+        return Element.WATER;
     }
 
     @Override
     public String getId() {
-        return "absorb";
+        return "cascade";
     }
 
     @Override
     public String getName() {
-        return "Absorb";
+        return "Cascade";
     }
 
     @Override
     public String getDescription() {
-        return "Killing a target gives you bonus Health & Damage for 10 minutes (up to 10 stacks)";
+        return "Also mines the block directly below the mined block";
     }
 
     @Override
@@ -37,6 +37,6 @@ public class Absorb implements Rune {
 
     @Override
     public String getItem() {
-        return "sword";
+        return "pickaxe";
     }
 }
