@@ -4,6 +4,8 @@ import BHML.aurum.runes.normal.Sniper;
 import BHML.aurum.runes.normal.Focus;
 import BHML.aurum.runes.normal.Hunter;
 import BHML.aurum.runes.normal.Experienced;
+import BHML.aurum.runes.normal.Instinct;
+import BHML.aurum.runes.normal.Conqueror;
 import BHML.aurum.runes.fire.FiredUp;
 import BHML.aurum.runes.fire.Smelt;
 import BHML.aurum.runes.earth.Absorb;
@@ -13,6 +15,7 @@ import BHML.aurum.runes.ender.SoulStrike;
 import BHML.aurum.runes.air.Acrobat;
 import BHML.aurum.runes.air.Vacuum;
 import BHML.aurum.runes.lightning.ShockingEntry;
+import BHML.aurum.runes.lightning.Conductive;
 import BHML.aurum.runes.water.Flow;
 import BHML.aurum.runes.water.Cascade;
 
@@ -41,6 +44,8 @@ public class RuneRegistry {
         registerRune(new Focus());
         registerRune(new Hunter());
         registerRune(new Experienced());
+        registerRune(new Instinct());
+        registerRune(new Conqueror());
         registerRune(new FiredUp());
         registerRune(new Smelt());
         registerRune(new Absorb());
@@ -50,6 +55,7 @@ public class RuneRegistry {
         registerRune(new Acrobat());
         registerRune(new Vacuum());
         registerRune(new ShockingEntry());
+        registerRune(new Conductive());
         registerRune(new Flow());
         registerRune(new Cascade());
 
