@@ -7,6 +7,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import com.destroystokyo.paper.entity.Pathfinder;
 
 import java.util.*;
 
@@ -23,11 +24,20 @@ public class SubjugateManager {
                     return;
                 }
                 
-                // Always clear inappropriate targets first
+                // CRITICAL: Always clear owner target immediately - highest priority
                 if (subjugate instanceof Mob mob) {
                     LivingEntity currentTarget = mob.getTarget();
-                    if (currentTarget != null && !isValidTarget(currentTarget, subjugate, conqueror)) {
-                        mob.setTarget(null);
+                    if (currentTarget != null) {
+                        // NEVER allow targeting the owner under any circumstances
+                        if (currentTarget == conqueror) {
+                            mob.setTarget(null);
+                            return; // Skip all other logic if trying to target owner
+                        }
+                        
+                        // Also clear any other inappropriate targets
+                        if (!isValidTarget(currentTarget, subjugate, conqueror)) {
+                            mob.setTarget(null);
+                        }
                     }
                 }
                 
@@ -37,7 +47,7 @@ public class SubjugateManager {
                 // Handle combat
                 LivingEntity target = findValidTarget(subjugate, conqueror);
                 if (target != null) {
-                    attackTarget(subjugate, target);
+                    attackTarget(subjugate, target, conqueror);
                 } else {
                     // Clear target if no valid targets to prevent attacking friends
                     if (subjugate instanceof Mob mob) {
@@ -67,6 +77,12 @@ public class SubjugateManager {
             
             // Check if valid target
             if (!isValidTarget(livingEntity, subjugate, conqueror)) continue;
+            
+            // CRITICAL: Check line of sight before considering target
+            if (!hasLineOfSight(subjugate, livingEntity)) continue;
+            
+            // CRITICAL: Check if target is reachable via pathfinding
+            if (!isReachable(subjugate, livingEntity)) continue;
             
             double distance = subjugate.getLocation().distance(livingEntity.getLocation());
             if (distance < bestDistance) {
@@ -101,10 +117,10 @@ public class SubjugateManager {
         return isHostileMob(potentialTarget);
     }
     
-    private void attackTarget(LivingEntity attacker, LivingEntity target) {
+    private void attackTarget(LivingEntity attacker, LivingEntity target, Player conqueror) {
         if (attacker instanceof Mob mob && target != null && !target.isDead()) {
-            // Double-check that this is still a valid target
-            if (isValidTarget(target, attacker, null)) { // We don't have conqueror here, so pass null
+            // Double-check that this is still a valid target with conqueror context
+            if (isValidTarget(target, attacker, conqueror)) {
                 mob.setTarget(target);
             } else {
                 mob.setTarget(null);
@@ -120,6 +136,24 @@ public class SubjugateManager {
             // Use Bukkit's pathfinding instead of teleport
             mob.getPathfinder().moveTo(target, 1.0); // Speed multiplier
         }
+    }
+    
+    private boolean hasLineOfSight(LivingEntity from, LivingEntity to) {
+        if (!(from instanceof Mob mob)) return true; // Fallback for non-mobs
+        
+        // Use Bukkit's built-in line of sight check
+        return mob.hasLineOfSight(to);
+    }
+    
+    private boolean isReachable(LivingEntity from, LivingEntity to) {
+        if (!(from instanceof Mob mob)) return true; // Fallback for non-mobs
+        
+        // Try to find a path to the target
+        Pathfinder.PathResult path = mob.getPathfinder().findPath(to.getLocation());
+        if (path == null) return false;
+        
+        // Check if path is reachable
+        return path.canReachFinalPoint() && path.getPoints().size() > 0;
     }
     
     private boolean isSubjugate(LivingEntity entity) {
@@ -139,15 +173,15 @@ public class SubjugateManager {
                entityType.equals("HUSK") ||
                entityType.equals("DROWNED") ||
                entityType.equals("STRAY") ||
-               entityType.equals("BOGGED");
+               entityType.equals("BOGGED") ||
+               entityType.equals("SPIDER") ||
+               entityType.equals("CAVE_SPIDER");
     }
     
     private boolean isNeutralMob(LivingEntity entity) {
         String entityType = entity.getType().name();
-        if (entityType.equals("SPIDER") || entityType.equals("CAVE_SPIDER")) {
-            long time = entity.getWorld().getTime();
-            return time >= 0 && time < 13000; // Daytime
-        }
+        // Spiders are now considered hostile, not neutral
+        // Removed spider and cave_spider from neutral list
         
         return entityType.equals("WOLF") ||
                entityType.equals("IRON_GOLEM") ||

@@ -262,5 +262,26 @@ public class RuneUtils {
         return item;
     }
 
+    /**
+     * Gets a random rune that can be applied to the specified item type
+     * @param itemType The item type (sword, bow, pickaxe, chestplate)
+     * @return A random rune compatible with the item type, or null if none found
+     */
+    public static Rune getRandomRuneForItemType(String itemType) {
+        List<Rune> compatibleRunes = new ArrayList<>();
+        
+        for (Rune rune : RuneRegistry.getAllRunes()) {
+            if (rune.getItem().equalsIgnoreCase(itemType)) {
+                compatibleRunes.add(rune);
+            }
+        }
+        
+        if (compatibleRunes.isEmpty()) {
+            return null;
+        }
+        
+        return compatibleRunes.get(new Random().nextInt(compatibleRunes.size()));
+    }
+
 
 }

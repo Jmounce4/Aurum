@@ -45,7 +45,7 @@ public class RuneRegistry {
         registerRune(new Hunter());
         registerRune(new Experienced());
         registerRune(new Instinct());
-        registerRune(new Conqueror());
+        //registerRune(new Conqueror());
         registerRune(new FiredUp());
         registerRune(new Smelt());
         registerRune(new Absorb());

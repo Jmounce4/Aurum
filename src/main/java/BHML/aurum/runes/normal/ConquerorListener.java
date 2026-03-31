@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -24,6 +25,19 @@ public class ConquerorListener implements Listener {
     private static final String CONQUEROR_KEY = "conqueror_owner";
     
     private final Map<UUID, Set<UUID>> playerSubjugates = new HashMap<>();
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        
+        // Wait a moment for the world to fully load before checking for subjugates
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                reconnectExistingSubjugates(player);
+            }
+        }.runTaskLater(Aurum.getPlugin(Aurum.class), 20L); // 1 second delay
+    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDeath(EntityDeathEvent event) {
@@ -126,6 +140,43 @@ public class ConquerorListener implements Listener {
         
         conqueror.sendMessage(ChatColor.GOLD + "You have conquered a " + mobType.name() + "!");
         conqueror.playSound(conqueror.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+    }
+
+    private void reconnectExistingSubjugates(Player player) {
+        String playerUUID = player.getUniqueId().toString();
+        
+        // Search all loaded worlds for this player's subjugates
+        for (World world : Bukkit.getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                if (!(entity instanceof LivingEntity livingEntity)) continue;
+                
+                // Check if this entity is a subjugate owned by this player
+                if (isSubjugateOwnedByPlayer(livingEntity, playerUUID)) {
+                    // Restart AI management for this subjugate
+                    SubjugateManager subjugateManager = new SubjugateManager();
+                    subjugateManager.manageSubjugate(livingEntity, player);
+                    
+                    // Add to tracking
+                    playerSubjugates.computeIfAbsent(player.getUniqueId(), k -> new HashSet<>()).add(livingEntity.getUniqueId());
+                    
+                    // Update custom name to current player name (in case they changed it)
+                    livingEntity.setCustomName(ChatColor.GOLD + player.getName() + "'s Subjugate");
+                }
+            }
+        }
+    }
+
+    private boolean isSubjugateOwnedByPlayer(LivingEntity entity, String playerUUID) {
+        PersistentDataContainer container = entity.getPersistentDataContainer();
+        
+        // Check if it's a subjugate
+        if (!container.has(new NamespacedKey(Aurum.getPlugin(Aurum.class), SUBJUGATE_KEY), PersistentDataType.STRING)) {
+            return false;
+        }
+        
+        // Check if owned by this player
+        String ownerId = container.get(new NamespacedKey(Aurum.getPlugin(Aurum.class), CONQUEROR_KEY), PersistentDataType.STRING);
+        return playerUUID.equals(ownerId);
     }
 
     private boolean isSubjugate(LivingEntity entity) {
